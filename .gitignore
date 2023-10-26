@@ -1,0 +1,7 @@
+yile/ansible/playbook/test/*
+yile/ansible/inventory/test_env.yml
+yile/ansible/roles/update/hotfix/vars/test.yml
+yile/ansible/roles/update/application/vars/test.yml
+yile/ansible/roles/update/application/source_shell
+yile/ansible/roles/update/landing_page/templates/origin_html
+yile/ansible/inventory/C/group_var/all/vault.yml
