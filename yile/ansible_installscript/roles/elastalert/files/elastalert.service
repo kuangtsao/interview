@@ -1,0 +1,14 @@
+[Unit]
+Description=elastalert
+After=elasticsearch.service
+
+[Service]
+Type=simple
+User=sysuser
+Group=sysuser
+Restart=on-failure
+WorkingDirectory=/data/elastalert
+ExecStart=/usr/local/bin/python3 -m elastalert.elastalert --config /data/elastalert/config.yaml --rule /data/elastalert/rules/telegram.yaml
+
+[Install]
+WantedBy=multi-user.target

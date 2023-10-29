@@ -1,0 +1,7 @@
+---
+- name: install go v1.16.4
+  hosts: "{{ ansible_host }}"
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  roles:
+    - role: go

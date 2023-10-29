@@ -1,0 +1,6 @@
+- name: install blackbox_exporter
+  hosts: "{{ ansible_host }}"
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  roles:
+    - role: blackbox_exporter

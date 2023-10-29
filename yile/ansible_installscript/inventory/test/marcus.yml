@@ -1,0 +1,6 @@
+aws_osaka:
+      ansible_host: 13.208.164.35
+      ansible_user: ec2-user
+    aws_centos:
+      ansible_host: 13.208.172.137
+      ansible_user: centos

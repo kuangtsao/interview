@@ -1,0 +1,6 @@
+- name: install mysqld_exporter
+  hosts: "{{ ansible_host }}"
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  roles:
+    - role: mysqld_exporter

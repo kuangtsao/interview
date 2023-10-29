@@ -1,0 +1,23 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  grpc_server_max_recv_msg_size: 15728640
+  grpc_server_max_send_msg_size: 15728640
+
+positions:
+  filename: /data/promtail/positions.yaml # This location needs to be writeable by promtail.
+
+client:
+  url: http://127.0.0.1:3100/loki/api/v1/push
+
+#https://grafana.com/docs/loki/latest/clients/promtail/configuration/
+scrape_configs:
+ - job_name: AuthenticationApi  #定義job名稱
+   pipeline_stages:
+   static_configs:
+   - targets:
+      - localhost
+     labels:
+      job: AuthenticationApi #定義job名稱
+      host: yg-prd-auth #定義host名稱
+      __path__: /data/logs/AuthenticationApi/*/*.txt #log檔位置

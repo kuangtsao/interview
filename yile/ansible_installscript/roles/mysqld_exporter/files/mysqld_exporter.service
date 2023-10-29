@@ -1,0 +1,19 @@
+[Service]
+
+User=mysql
+Group=mysql
+Type=simple
+Restart=always
+ExecStart=/data/mysqld_exporter/mysqld_exporter \
+--config.my-cnf=/data/mysqld_exporter/mysqld_exporter.cnf \
+--collect.auto_increment.columns \
+--collect.binlog_size \
+--collect.engine_innodb_status \
+--collect.engine_tokudb_status \
+--collect.global_status \
+--web.listen-address=0.0.0.0:9104
+
+[Install]
+
+WantedBy=multi-user.target
+

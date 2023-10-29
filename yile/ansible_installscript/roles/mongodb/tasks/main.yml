@@ -1,0 +1,104 @@
+- name: 添加服務使用者 'mongod' 到 {{ ansible_host }}
+  user:
+    name: mongod
+    shell: /sbin/nologin
+    create_home: no
+
+- name: 添加 mongod 群組給 {{ user_name }}
+  user: 
+    name: "{{ user_name }}"
+    groups: mongod
+    append: yes
+  
+- name: 安裝啟動 mongodb 缺少的檔案 
+  yum:
+    name:
+    - epel-release 
+    - libcurl 
+    - openssl 
+    - xz-libs
+    - ntpdate
+    state: present
+  
+- name: 下載 mongodb 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/mongodb-linux-x86_64-rhel70-3.4.24.tgz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 mongodb 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/mongodb-linux-x86_64-rhel70-3.4.24.tgz
+    dest: /data
+    remote_src: yes
+
+- name: 重新命名 mongodb 資料夾
+  shell:
+    cmd: mv mongodb-linux-x86_64-rhel70-3.4.24 mongodb
+    chdir: /data
+
+- name: 添加 mongodb 需要的資料夾
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - /data/mongodb/log
+  - /data/mongodb/mongodb
+
+- name: 上傳 mongod.conf 到 /data/mongodb
+  copy:
+    src: "mongod.conf"
+    dest: "/data/mongodb"
+
+- name: 更改 mongodb 權限
+  file:
+    path: /data/mongodb/
+    owner: mongod
+    group: mongod
+    recurse: true
+
+- name: 上傳 mongodb_env.sh 到 /etc/profile.d
+  copy:
+    src: "mongodb_env.sh"
+    dest: "/etc/profile.d"
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "mongod.service"
+    dest: "/etc/systemd/system"
+
+- name: 做 mongodb 的軟連結
+  file:
+   src: /data/mongodb/bin/{{ item }} 
+   dest: /usr/bin/{{ item }}
+   owner: root
+   group: root
+   state: link
+  with_items: 
+  - bsondump
+  - mongod
+  - mongoexport
+  - mongoimport
+  - mongoperf
+  - mongorestore
+  - mongostat
+  - mongo
+  - mongodump
+  - mongofiles
+  - mongooplog
+  - mongoreplay
+  - mongos
+  - mongotop
+
+- name: systemd daemon-reload enable mongodb
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: mongod
+
+- name: 清理 /data/dl/mongodb-linux-x86_64-rhel70-3.4.24.tgz
+  file:
+    path: /data/dl/mongodb-linux-x86_64-rhel70-3.4.24.tgz
+    state: absent

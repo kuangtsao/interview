@@ -1,0 +1,21 @@
+- name: add the user "{{ user_name }}"
+  user:
+    name: "{{ user_name }}"
+    shell: /bin/bash
+    groups: wheel
+    append: yes
+
+- name: set the user "{{ user_name }}" 's public key 
+  authorized_key:
+    user: "{{ user_name }}"
+    state: present
+    key: "{{ lookup('file','files/{{ user_name }}.pub') }}"
+
+- name: set the user {{ user_name }} 's sudoers file in /etc/sudoers.d
+  lineinfile: 
+    path: /etc/sudoers.d/{{ user_name }}_sudoers
+    line: '{{ user_name }} ALL=(ALL) NOPASSWD:ALL'
+    state: present
+    mode: 0440
+    create: yes
+    validate: "visudo -cf %s"

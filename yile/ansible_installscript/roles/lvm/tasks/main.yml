@@ -1,0 +1,35 @@
+---
+- name: create data dir
+  file:
+    path: /data
+    state: directory
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+
+- name: create new partition
+  shell:
+    cmd: pvcreate /dev/"{{disk_name}}"
+    
+- name: create vg
+  shell:
+    cmd: vgcreate data /dev/"{{disk_name}}"
+    
+- name: create lv
+  shell:
+    cmd: lvcreate -l 100%FREE -n data data
+
+- name: make xfs filesystem
+  shell:
+    cmd: mkfs.xfs /dev/data/data
+
+- name: make /etc/fstab
+  mount:
+    path: /data
+    src: /dev/mapper/data-data
+    fstype: xfs
+    state: present
+
+- name: mount -a
+  shell:
+    cmd: mount -a
+    warn: no

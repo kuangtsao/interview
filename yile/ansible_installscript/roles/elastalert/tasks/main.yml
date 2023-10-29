@@ -1,0 +1,99 @@
+---
+- name: 安裝基本套件
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - epel-release.noarch
+    - zlib-devel
+    - bzip2-devel
+    - openssl-devel
+    - ncurses-devel
+    - sqlite-devel
+    - readline-devel
+    - tk-devel
+    - gcc
+    - make
+    - python-pip
+
+- name: download get-pip.py
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: /data/dl/get-pip.py
+
+- name: download Python-3.6.8.tgz
+  get_url:
+    url: https://dl.fromer.url/Python-3.6.8.tgz
+    dest: /data/dl/Python-3.6.8.tgz
+    username: yidevops
+    password: Log@n0vu3
+
+- name: create Python-3.6.8 dir
+  file:
+    path: /data/Python-3.6.8
+    state: directory
+
+- name: unzip Python-3.6.8
+  unarchive:
+    src: /data/dl/Python-3.6.8.tgz
+    dest: /data/Python-3.6.8
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: do configure && make && make install
+  shell:
+    cmd: /data/Python-3.6.8/configure && make && make install
+
+- name: do python3 get-pip.py
+  shell:
+    cmd: python3 /data/dl/get-pip.py
+
+- name: pip3 install auth
+  shell:
+    cmd: pip3 install auth
+
+- name: pip3 install elastalert
+  shell:
+    cmd: pip3 install elastalert
+
+- name: git clone https://github.com/Yelp/elastalert.git
+  git:
+    repo: https://github.com/Yelp/elastalert.git
+    dest: /data/elastalert
+
+- name: copy config.yaml to /data/elastalert/
+  copy:
+    src: "config.yaml"
+    dest: "/data/elastalert"
+    remote_src: no
+
+- name: create /data/elastalert/rules dir
+  file:
+    path: /data/elastalert/rules
+    state: directory
+
+- name: copy telegram.yaml to /data/elastalert/rules
+  copy:
+    src: "telegram.yaml"
+    dest: "/data/elastalert/rules"
+    remote_src: no
+
+- name: copy elastalert.service to /etc/systemd/system/
+  copy:
+    src: "elastalert.service"
+    dest: "/etc/systemd/system"
+    remote_src: no
+
+- name: change elastalert.service user&group
+  replace:
+    path: /etc/systemd/system/elastalert.service
+    regexp: 'sysuser'
+    replace: "{{ user_name }}"
+
+- name: change elastalert dir owner
+  file:
+    path: /data/elastalert/
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true

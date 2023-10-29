@@ -1,0 +1,83 @@
+---
+
+- name: download filebeat
+  get_url:
+    url: https://dl.fromer.url/filebeat-7.12.1-linux-x86_64.tar.gz
+    dest: /data/dl/filebeat-7.12.1-linux-x86_64.tar.gz
+    username: yidevops
+    password: Log@n0vu3
+
+- name: create filebeat dir
+  file:
+    path: /data/filebeat
+    state: directory
+
+- name: unzip filebeat-7.12.1-linux-x86_64.tar.gz
+  unarchive:
+    src: /data/dl/filebeat-7.12.1-linux-x86_64.tar.gz
+    dest: /data/filebeat
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: backup filebeat.yml
+  shell:
+    cmd: mv /data/filebeat/filebeat.yml /data/filebeat/filebeat.yml.old
+
+- name: copy new filebeat.yml to /data/filebeat/
+  copy:
+    src: "filebeat.yml"
+    dest: "/data/filebeat"
+    remote_src: no
+
+- name: change filebeat.yml redis-ip user&group
+  replace:
+    path: /data/filebeat/filebeat.yml
+    regexp: 'redis_server'
+    replace: "{{ redis_ip }}"
+
+- name: copy  filebeat.service to /usr/lib/systemd/system/
+  copy:
+    src: "filebeat.service"
+    dest: "/usr/lib/systemd/system"
+    remote_src: no
+
+- name: change filebeat.yml redis-ip user&group
+  replace:
+    path: /usr/lib/systemd/system/filebeat.service
+    regexp: 'sysuser'
+    replace: "{{ user_name }}"
+
+- name: change filebeat dir owner
+  file:
+    path: /data/filebeat/
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true
+
+- name: daemon_reload
+  systemd:
+    daemon_reload: yes
+
+- name: backup org.freedesktop.systemd1.policy to tmp
+  copy:
+    src: /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+    dest: /tmp
+    remote_src: yes
+
+- name: sed org.freedesktop.systemd1.policy
+  shell:
+    cmd: |
+      sed -i '60s/auth_admin/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+      sed -i '61s/auth_admin/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+      sed -i '62s/auth_admin_keep/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+
+- name: restart polkit
+  service:
+    name: polkit
+    state: restarted
+
+- name: start filebeat
+  systemd:
+    name: filebeat.service
+    state: started
+    enabled: yes

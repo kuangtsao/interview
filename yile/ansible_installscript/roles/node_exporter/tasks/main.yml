@@ -1,0 +1,47 @@
+- name: 添加服務使用者 'node_exporter' 到 {{ ansible_host }}
+  user:
+    name: node_exporter
+    shell: /sbin/nologin
+    create_home: no
+
+- name: 下載 node_exporter 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/node_exporter-1.1.2.linux-amd64.tar.gz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 node_expoter 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/node_exporter-1.1.2.linux-amd64.tar.gz
+    dest: /data
+    remote_src: yes
+
+- name: 重新命名 node_exporter 資料夾
+  shell:
+    cmd: mv node_exporter-1.1.2.linux-amd64 node_exporter
+    chdir: /data/
+
+- name: 更改 node_exporter 權限
+  file:
+    path: /data/node_exporter/
+    owner: node_exporter
+    group: node_exporter
+    recurse: true
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "node_exporter.service"
+    dest: "/etc/systemd/system"
+
+- name: systemd daemon-reload enable & start node_exporter
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: node_exporter
+
+- name: 清理 /data/dl/node_exporter-1.1.2.linux-amd64.tar.gz
+  file:
+    path: /data/dl/node_exporter-1.1.2.linux-amd64.tar.gz
+    state: absent

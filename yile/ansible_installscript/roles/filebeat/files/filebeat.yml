@@ -1,0 +1,19 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /data/openresty/nginx/logs/access.log
+  fields:
+    log_source: access
+- type: log
+  enabled: true
+  paths:
+    - /data/openresty/nginx/logs/error.log
+  fields:
+    log_source: error
+
+output.redis:
+  hosts: ["redis_server:6379"]
+  key: access_error
+  password: Log@n0vu3
+  db: 0

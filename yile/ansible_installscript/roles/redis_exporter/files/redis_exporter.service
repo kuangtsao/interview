@@ -1,0 +1,17 @@
+[Unit]
+Description=redis_exporter
+After=network.target
+
+[Service]
+User=yidevops
+Group=yidevops
+Type=simple
+Restart=always
+#如果redis没有密码
+ExecStart=/data/redis_exporter/redis_exporter  --redis.addr 0.0.0.0:6379  --web.listen-address 0.0.0.0:9121
+#如果redis有密码
+#ExecStart=/data/redis_exporter/redis_exporter  -redis.addr 127.0.0.1:6379  -redis.password 123456 -web.listen-address 0.0.0.0:9121
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

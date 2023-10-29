@@ -1,0 +1,11 @@
+[Unit]
+Description=prometheus telegram bot
+Documention=https://github.com/inCaller/prometheus_bot/blob/master/README.md
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/data/prometheus_bot/prometheus_bot -c /data/prometheus_bot/config/config.yaml -t /data/prometheus_bot/config/template.tmpl
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,128 @@
+---
+
+- name: download elasticsearch
+  get_url:
+    url: https://dl.fromer.url/elasticsearch-7.5.0-linux-x86_64.tar.gz
+    dest: /data/dl/elasticsearch-7.5.0-linux-x86_64.tar.gz
+    username: yidevops
+    password: Log@n0vu3
+
+- name: download x-pack-core-7.5.0.jar
+  get_url:
+    url: https://dl.fromer.url/x-pack-core-7.5.0.jar
+    dest: /data/dl/x-pack-core-7.5.0.jar
+    username: yidevops
+    password: Log@n0vu3
+
+- name: download elastic-certificates.p12
+  get_url:
+    url: https://dl.fromer.url/elastic-certificates.p12
+    dest: /data/dl/elastic-certificates.p12
+    username: yidevops
+    password: Log@n0vu3
+
+- name: create elasticsearch dir
+  file:
+    path: /data/elasticsearch
+    state: directory
+
+- name: unzip elasticsearch-7.5.0-linux-x86_64.tar.gz
+  unarchive:
+    src: /data/dl/elasticsearch-7.5.0-linux-x86_64.tar.gz
+    dest: /data/elasticsearch
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: create es-data dir
+  file:
+    path: /data/elasticsearch/es-data
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: create es-log dir
+  file:
+    path: /data/elasticsearch/es-log
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: 調整記憶體最小值
+  replace:
+    path: /data/elasticsearch/config/jvm.options
+    regexp: '-Xms1g'
+    replace: '-Xms3g'
+
+- name: 調整記憶體最大值
+  replace:
+    path: /data/elasticsearch/config/jvm.options
+    regexp: '-Xmx1g'
+    replace: '-Xmx3g'
+
+- name: 放置憑證至/elasticsearch/config/
+  copy:
+    src: "/data/dl/elastic-certificates.p12"
+    dest: "/data/elasticsearch/config/"
+    remote_src: yes
+
+- name: backup x-pack-core-7.5.0.jar
+  copy:
+    src: "/data/elasticsearch/modules/x-pack-core/x-pack-core-7.5.0.jar"
+    dest: "/data/elasticsearch/modules/x-pack-core/x-pack-core-7.5.0.jar.bk"
+    remote_src: yes
+
+- name: copy x-pack-core-7.5.0.jar to /data/elasticsearch/modules/x-pack-core/
+  copy:
+    src: "/data/dl/x-pack-core-7.5.0.jar"
+    dest: "/data/elasticsearch/modules/x-pack-core"
+    remote_src: yes
+
+- name: backup elasticsearch.yml
+  copy:
+    src: "/data/elasticsearch/config/elasticsearch.yml"
+    dest: "/data/elasticsearch/config/elasticsearch.yml.bk"
+    remote_src: yes
+
+- name: copy elasticsearch.yml to /data/elasticsearch/config/
+  copy:
+    src: "elasticsearch.yml"
+    dest: "/data/elasticsearch/config"
+    remote_src: no
+
+- name: copy elasticsearch.service to /etc/systemd/system/
+  copy:
+    src: "elasticsearch.service"
+    dest: "/etc/systemd/system"
+    remote_src: no
+
+- name: change elasticsearch.service user&group
+  replace:
+    path: /etc/systemd/system/elasticsearch.service
+    regexp: 'sysuser'
+    replace: "{{ user_name }}"
+
+- name: copy alter-es-settings.sh to /data/dl/
+  copy:
+    src: "alter-es-settings.sh"
+    dest: "/data/dl"
+    remote_src: no
+
+
+- name: change elasticsearch dir owner
+  file:
+    path: /data/elasticsearch/
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true
+
+- name: sed org.freedesktop.systemd1.policy
+  shell:
+    cmd: |
+      sed -i '60s/auth_admin/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+      sed -i '61s/auth_admin/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+      sed -i '62s/auth_admin_keep/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+
+- name: restart polkit
+  systemd:
+    name: polkit
+    state: restarted

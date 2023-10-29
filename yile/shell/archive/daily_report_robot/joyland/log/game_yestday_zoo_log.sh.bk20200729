@@ -1,0 +1,49 @@
+#!/bin/bash
+
+app01="/home/qpdevops/test/01CountScore"
+app02="/home/qpdevops/test/02CountScore"
+app05="/home/qpdevops/test/05CountScore"
+
+##today
+days=`date --date='1 days ago' "+%Y_%m_%d"`
+daysa=`date --date='0 days ago' "+%Y%m%d"`
+
+
+mkdir -p "/data/game_zip_log/zoo/01_ddz/$days"
+mkdir -p "/data/game_zip_log/zoo/02_pdk/$days"
+mkdir -p "/data/game_zip_log/zoo/05_dn/$days"
+
+##ddz log patch
+log_patch01="/data/deploy/01_douDiZhu/ZOO_LOG/$days"
+glog_patch01="/data/game_zip_log/zoo/01_ddz/$days"
+
+##PDK log patch
+log_patch02="/data/deploy/02_paoDeKuai/ZOO_LOG/$days"
+glog_patch02="/data/game_zip_log/zoo/02_pdk/$days"
+
+##DN log patch
+log_patch05="/data/deploy/5_dn_qiangZhuang/ZOO_LOG/$days"
+glog_patch05="/data/game_zip_log/zoo/05_dn/$days"
+
+
+##ddz today
+
+$app01 "$log_patch01/DDZ_Room_001.log_$days.txt" $glog_patch01
+$app01 "$log_patch01/DDZ_Room_100.log_$days.txt" $glog_patch01
+$app01 "$log_patch01/DDZ_Room_200.log_$days.txt" $glog_patch01
+
+##pdk today
+
+$app02 "$log_patch02/PDK_Room_001.log_$days.txt" $glog_patch02
+$app02 "$log_patch02/PDK_Room_100.log_$days.txt" $glog_patch02
+$app02 "$log_patch02/PDK_Room_200.log_$days.txt" $glog_patch02
+
+##dn today
+
+$app05 "$log_patch05/DN_Room_001.log_$days.txt" $glog_patch05
+$app05 "$log_patch05/DN_Room_100.log_$days.txt" $glog_patch05
+$app05 "$log_patch05/DN_Room_200.log_$days.txt" $glog_patch05
+
+#tar -zcvf $glog_patch01/01_ddz/99_ddz_"$daysa".tar.gz -C $log_patch01 $days
+
+#tar -zcvf $glog_patch01/01_ddz/99_ddz_"$daysa".tar.gz -C $log_patch01 $days

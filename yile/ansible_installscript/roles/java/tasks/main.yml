@@ -1,0 +1,80 @@
+---
+- name: 安裝基本套件
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - epel-release.noarch
+    - vim
+    - net-tools
+    - telnet
+    - wget
+    - git
+
+- name: install htop
+  yum:
+    name: htop
+    state: present
+
+- name: download jdk
+  get_url:
+    url: https://dl.fromer.url/jdk-8u281-linux-x64.tar.gz
+    dest: /data/dl/jdk-8u281-linux-x64.tar.gz
+    username: yidevops
+    password: Log@n0vu3
+
+
+- name: unzip jdk
+  unarchive:
+    src: /data/dl/jdk-8u281-linux-x64.tar.gz
+    dest: /data/
+    remote_src: yes
+
+- name: change file name
+  shell:
+    cmd: mv /data/jdk1.8.0_281 /data/java
+
+- name: 調整內核參數
+  lineinfile:
+    path: /root/.bashrc
+    line: "{{ item }}"
+    create: yes
+  with_items:
+    - "JAVA_HOME=/data/java"
+    - "JRE_HOME=/data/java/jre"
+    - "CLASSPATH=.:$JAVA_HOME/lib:/dt.jar:$JAVA_HOME/lib/tools.jar"
+    - "PATH=$PATH:$JAVA_HOME/bin"
+
+- name: 添加環境變數 copy java.sh to /etc/profile.d
+  copy:
+    src: "java.sh"
+    dest: "/etc/profile.d"
+    remote_src: no
+
+
+- name: 調整內核參數
+  lineinfile:
+    path: /etc/security/limits.conf
+    line: "{{ item }}"
+    create: yes
+  with_items:
+    - "* soft nofile 655360"
+    - "* hard nofile 655360"
+    - "* soft nproc 2048"
+    - "* hard nproc 4096"
+
+- name: 調整/etc/sysctl.conf參數
+  shell:
+    cmd: sed -i '$a vm.max_map_count=655360' /etc/sysctl.conf
+
+- name: sysctl -p
+  shell:
+    cmd: sysctl -p
+
+- name: create java link
+  file:
+    path: /usr/bin/java
+    src: /data/java/bin/java
+    state: link
+

@@ -1,0 +1,57 @@
+---
+- name: 添加服務使用者 'kafka'
+  user:
+    name: kafka
+    shell: /bin/bash
+
+- name: download kafka
+  get_url:
+    url: https://dl.fromer.url/kafka.tgz
+    dest: /data/dl/kafka.tgz
+    username: yidevops
+    password: Log@n0vu3
+
+- name: create kafka dir
+  file:
+    path: /data/kafka
+    state: directory
+
+- name: unzip kafka.tgz
+  unarchive:
+    src: /data/dl/kafka.tgz
+    dest: /data/kafka
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: mv server.properties server.proerties.old
+  shell:
+    cmd: mv /data/kafka/config/server.properties /data/kafka/config/server.properties.old
+
+- name: copy server.propertis to /data/kafka/config
+  copy:
+    src: "server.properties"
+    dest: "/data/kafka/config"
+    remote_src: no
+
+- name: copy kafka.service to /etc/systemd/system/
+  copy:
+    src: "kafka.service"
+    dest: "/etc/systemd/system"
+    remote_src: no
+
+- name: change kafka dir owner
+  file:
+    path: /data/kafka/
+    owner: kafka
+    group: kafka
+    recurse: true
+
+- name: daemon_reload
+  systemd:
+    daemon_reload: yes
+
+- name: start kafka.service
+  systemd:
+    name: kafka.service
+    state: started
+    enabled: yes

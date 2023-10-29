@@ -1,0 +1,6 @@
+- name: install prometheus_bot
+  hosts: "{{ ansible_host }}"
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  roles:
+    - role: prometheus_bot

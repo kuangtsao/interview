@@ -1,0 +1,36 @@
+- name: 下載 loki 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/loki-linux-amd64.tar.gz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 添加需要的資料夾
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - /data/loki
+
+- name: 解壓 loki 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/loki-linux-amd64.tar.gz
+    dest: /data/loki
+    remote_src: yes
+
+- name: 上傳 loki.yaml 到 {{ ansible_host }}
+  copy:
+    src: "loki.yaml"
+    dest: "/data/loki"
+
+- name: 更改 loki 權限
+  file:
+    path: /data/loki/
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true
+
+- name: 清理 /data/dl/loki-linux-amd64.tar.gz
+  file:
+    path: /data/dl/loki-linux-amd64.tar.gz
+    state: absent

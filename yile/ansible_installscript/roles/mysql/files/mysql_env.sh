@@ -1,0 +1,2 @@
+MYSQL_HOME=/data/mysql
+PATH=$PATH:$MYSQL_HOME/bin

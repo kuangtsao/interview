@@ -1,0 +1,91 @@
+---
+
+- name: download logstash
+  get_url:
+    url: https://dl.fromer.url/logstash-7.5.0.tar.gz
+    dest: /data/dl/logstash-7.5.0.tar.gz
+    username: yidevops
+    password: Log@n0vu3
+
+- name: create logstash dir
+  file:
+    path: /data/logstash
+    state: directory
+
+- name: unzip logstash-7.5.0.tar.gz
+  unarchive:
+    src: /data/dl/logstash-7.5.0.tar.gz
+    dest: /data/logstash
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: create ls-data dir
+  file:
+    path: /data/logstash/ls-data
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: create ls-log dir
+  file:
+    path: /data/logstash/ls-log
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: create conf.d dir
+  file:
+    path: /data/logstash/conf.d
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: 調整記憶體最小值
+  replace:
+    path: /data/logstash/config/jvm.options
+    regexp: '-Xms1g'
+    replace: '-Xms3g'
+
+- name: 調整記憶體最大值
+  replace:
+    path: /data/logstash/config/jvm.options
+    regexp: '-Xmx1g'
+    replace: '-Xmx3g'
+
+
+- name: backup logstash.yml
+  copy:
+    src: "/data/logstash/config/logstash.yml"
+    dest: "/data/logstash/config/logstash.yml.bk"
+    remote_src: yes
+
+- name: copy logstash.yml to /data/logstash/config
+  copy:
+    src: "logstash.yml"
+    dest: "/data/logstash/config"
+    remote_src: no
+
+- name: copy logstash.conf to /data/logstash/conf.d
+  copy:
+    src: "logstash.conf"
+    dest: "/data/logstash/conf.d"
+    remote_src: no
+
+- name: copy logstash.service to /etc/systemd/system/
+  copy:
+    src: "logstash.service"
+    dest: "/etc/systemd/system"
+    remote_src: no
+
+- name: change logstash.service user&group
+  replace:
+    path: /etc/systemd/system/logstash.service
+    regexp: 'sysuser'
+    replace: "{{ user_name }}"
+
+- name: change logstash dir owner
+  file:
+    path: /data/logstash
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true

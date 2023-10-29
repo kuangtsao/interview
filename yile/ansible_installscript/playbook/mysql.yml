@@ -1,0 +1,6 @@
+- name: install mysql 5.7
+  hosts: "{{ ansible_host }}" 
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  roles:
+    - role: mysql

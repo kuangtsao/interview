@@ -1,0 +1,39 @@
+---
+
+- name: download blackbox_exporter
+  get_url:
+    url: https://dl.fromer.url/blackbox_exporter-0.14.0.linux-amd64.tar.gz
+    dest: /data/dl/blackbox_exporter-0.14.0.linux-amd64.tar.gz
+    username: yidevops
+    password: Log@n0vu3
+
+- name: create blackbox_exporter dir
+  file:
+    path: /data/blackbox_exporter
+    state: directory
+
+- name: unzip blackbox_exporter-0.14.0.linux-amd64.tar.gz
+  unarchive:
+    src: /data/dl/blackbox_exporter-0.14.0.linux-amd64.tar.gz
+    dest: /data/blackbox_exporter
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+  
+- name: copy blackbox_exporter.service to /etc/systemd/system/
+  copy:
+    src: "blackbox_exporter.service"
+    dest: "/etc/systemd/system"
+    remote_src: no
+
+- name: change blackbox_exporter.service user&group
+  replace:
+    path: /etc/systemd/system/blackbox_exporter.service
+    regexp: 'sysuser'
+    replace: "{{ user_name }}"
+
+- name: change blackbox_exporter dir owner
+  file:
+    path: /data/blackbox_exporter
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true

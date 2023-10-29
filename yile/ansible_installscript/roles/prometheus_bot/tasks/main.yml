@@ -1,0 +1,42 @@
+- name: 添加服務使用者 'prometheus' 到 {{ ansible_host }}
+  user:
+    name: prometheus
+    shell: /sbin/nologin
+    create_home: no
+
+- name: 下載 prometheus_bot 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/prometheus_bot.tgz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 prometheus_bot 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/prometheus_bot.tgz
+    dest: /data
+    remote_src: yes
+
+- name: 更改 prometheus_bot 權限
+  file:
+    path: /data/prometheus_bot/
+    owner: prometheus
+    group: prometheus
+    recurse: true
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "prometheus_bot.service"
+    dest: "/etc/systemd/system"
+
+- name: systemd daemon-reload enable & start prometheus_bot
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: prometheus_bot
+
+- name: 清理 /data/dl/prometheus_bot.tgz
+  file:
+    path: /data/dl/prometheus_bot.tgz
+    state: absent

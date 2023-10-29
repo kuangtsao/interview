@@ -1,0 +1,48 @@
+- name: 下載 mysqld_exporter 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/mysqld_exporter-0.12.1.linux-amd64.tar.gz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 mysqld_exporter 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/mysqld_exporter-0.12.1.linux-amd64.tar.gz
+    dest: /data
+    remote_src: yes
+
+- name: 重新命名 mysqld_exporter 資料夾
+  shell:
+    cmd: mv mysqld_exporter-0.12.1.linux-amd64 mysqld_exporter
+    chdir: /data/
+
+- name: 更改 mysqld_exporter 權限
+  file:
+    path: /data/mysqld_exporter/
+    owner: mysql
+    group: mysql
+    recurse: true
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "mysqld_exporter.service"
+    dest: "/etc/systemd/system"
+    remote_src : no
+
+- name: 上傳 cnf 檔案到 {{ ansible_host }}
+  copy:
+    src: "mysqld_exporter.cnf"
+    dest: "/data/mysqld_exporter"
+    remote_src : no
+
+- name: systemd daemon-reload enable & start mysqld_exporter.service
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: mysqld_exporter
+
+- name: 清理 /data/dl/mysqld_exporter-0.12.1.linux-amd64.tar.gz
+  file:
+    path: /data/dl/mysqld_exporter-0.12.1.linux-amd64.tar.gz
+    state: absent

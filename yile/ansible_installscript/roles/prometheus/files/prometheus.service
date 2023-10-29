@@ -1,0 +1,16 @@
+[Unit]
+Description=Prometheus
+Documentation=https://prometheus.io/docs/introduction/overview/
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/data/prometheus/prometheus \
+    --config.file /data/prometheus/prometheus.yml \
+    --storage.tsdb.path /data/prometheus/tsdb \
+    --web.console.templates=/data/prometheus/consoles \
+    --web.console.libraries=/data/prometheus/console_libraries
+
+[Install]
+WantedBy=multi-user.target

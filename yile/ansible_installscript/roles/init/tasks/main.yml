@@ -1,0 +1,51 @@
+- name: 關閉 selinux
+  shell:
+    cmd: setenforce 0
+
+- name: disable selinux
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: SELINUX=disabled
+
+- name: 安裝需要的套件(phase 1)
+  yum:
+    name:
+      - epel-release
+      - libcurl
+      - openssl 
+      - xz-libs 
+      - ntpdate
+    state: present
+
+- name: 安裝需要的套件(phase 2)
+  yum:
+    name:
+      - vim 
+      - net-tools 
+      - telnet 
+      - htop 
+      - wget 
+      - git 
+      - zlib-devel 
+      - bzip2-devel 
+      - openssl-devel 
+      - ncurses-devel 
+      - sqlite-devel 
+      - readline-devel 
+      - tk-devel 
+      - make 
+      - bash-completion
+    state: present
+
+- name: 打開 ip_conntrack
+  shell:
+    cmd: modprobe ip_conntrack
+
+- name: 上傳 custom_kernel.conf 到 /etc/sysctl.d
+  copy:
+    src: "custom_kernel.conf"
+    dest: "/etc/sysctl.d"
+
+- name: 使 custom_kernel.conf 生效
+  shell: sysctl --system

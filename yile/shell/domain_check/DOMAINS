@@ -1,0 +1,4 @@
+DOMAINS=(
+"www.example.com"
+"www.contoso.com"
+)

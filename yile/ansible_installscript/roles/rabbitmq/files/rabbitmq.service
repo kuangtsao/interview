@@ -1,0 +1,13 @@
+[Unit]
+Description=RabbitMQ Messaging Server
+After=network.target
+[Service]
+Type=simple
+User=rabbitmq
+Group=rabbitmq
+SyslogIdentifier=rabbitmq
+LimitNOFILE=65536
+ExecStart=/data/rabbitmq/sbin/rabbitmq-server
+ExecStop=/data/rabbitmq/sbin/rabbitmqctl stop
+[Install]
+WantedBy=multi-user.target

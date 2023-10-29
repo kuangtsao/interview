@@ -1,0 +1,4 @@
+/ssl_check/url_not_exist*
+/ssl_check/ssl_check_failed*
+/ssl_check/ssl_check_lessthan0*
+/domain_check/domain_check_failed*

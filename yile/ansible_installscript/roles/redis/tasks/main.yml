@@ -1,0 +1,91 @@
+- name: 添加服務使用者 'redis' 到 {{ ansible_host }}
+  user:
+    name: redis
+    shell: /sbin/nologin
+    create_home: no
+
+- name: 安裝 gcc
+  yum:
+    name: gcc
+    state: present
+
+- name: 打開 kernel ip_contrack
+  shell:
+    cmd: modprobe ip_conntrack
+
+- name: 下載 redis 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/redis-6.2.2.tar.gz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 redis 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/redis-6.2.2.tar.gz
+    dest: /data
+    remote_src: yes
+
+- name: 重新命名 redis 資料夾
+  shell:
+    cmd: mv redis-6.2.2 redis
+    chdir: /data/
+
+- name: 建立 redis 裡面的資料夾
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - /data/redis/redis-log
+  - /data/redis/db
+
+- name: 編譯 redis 6.2.2
+  shell: 
+    cmd: make PREFIX=/data/redis install
+    chdir: /data/redis
+
+- name: 上傳 redis.conf 到 {{ ansible_host }}
+  copy:
+    src: "redis.conf"
+    dest: "/data/redis"
+
+- name: 更改 redis 權限
+  file:
+    path: /data/redis/
+    owner: redis
+    group: redis
+    recurse: true
+
+- name: 做 redis 的軟連結
+  file:
+   src: /data/redis/bin/{{ item }} 
+   dest: /usr/bin/{{ item }}
+   owner: root
+   group: root
+   state: link
+  with_items: 
+  - redis-benchmark
+  - redis-cli
+  - redis-server
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "redis.service"
+    dest: "/etc/systemd/system"
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "redis_env.sh"
+    dest: "/etc/profile.d"
+
+- name: systemd daemon-reload enable & start redis
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: redis
+
+- name: 清理 /data/dl/redis-6.2.2.tar.gz
+  file:
+    path: /data/dl/redis-6.2.2.tar.gz
+    state: absent

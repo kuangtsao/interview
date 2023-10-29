@@ -1,0 +1,17 @@
+- name: 下載 xtrabackup 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/Percona-XtraBackup-2.4.9-ra467167cdd4-el6-x86_64-bundle.tar
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 xtrabackup 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/Percona-XtraBackup-2.4.9-ra467167cdd4-el6-x86_64-bundle.tar
+    dest: /data/dl
+    remote_src: yes
+
+- name: 安裝 xtrabackup
+  yum:
+    name: /data/dl/percona-xtrabackup-24-2.4.9-1.el6.x86_64.rpm
+    state: present

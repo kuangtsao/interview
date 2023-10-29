@@ -1,0 +1,15 @@
+[Unit]
+Description=Blackbox Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=sysuser
+Group=sysuser
+Type=simple
+ExecStart=/data/blackbox_exporter/blackbox_exporter --config.file /data/blackbox_exporter/blackbox.yml
+
+[Install]
+WantedBy=multi-user.target
+
+

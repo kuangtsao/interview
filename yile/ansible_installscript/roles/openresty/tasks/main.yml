@@ -1,0 +1,66 @@
+---
+- name: 安裝openresty依賴包
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - readline
+    - readline-devel
+    - pcre
+    - pcre-devel
+    - zlib-devel
+    - openssl
+    - openssl-devel
+    - gcc
+    - postgresql-devel
+
+- name: 安裝編譯工具
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - gcc-c++
+    - libtool
+    - make
+
+- name: download openresty(已編譯過)
+  get_url:
+    url: https://dl.fromer.url/openresty.tar.gz
+    dest: /data/dl/openresty.tar.gz
+    username: yidevops
+    password: Log@n0vu3
+
+
+- name: unzip openresty
+  unarchive:
+    src: /data/dl/openresty.tar.gz
+    dest: /data/
+    remote_src: yes
+
+- name: 添加環境變數 copy nginx.sh to /etc/profile.d
+  copy:
+    src: "nginx.sh"
+    dest: "/etc/profile.d"
+    remote_src: no
+
+- name: copy nginx.service to /etc/systemd/system/
+  copy:
+    src: "nginx.service"
+    dest: "/etc/systemd/system"
+    remote_src: no
+
+- name: change owner
+  file:
+    path: /data/openresty/
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true
+
+- name: systemctl enable&start nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+

@@ -1,0 +1,2 @@
+REDIS_HOME=/data/redis
+PATH=$PATH:$REDIS_HOME/bin

@@ -1,0 +1,13 @@
+---
+- name: create directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+    
+  with_items:
+  - /data/dl
+  - /data/tmp
+  - /data/databack
+  - /data/script

@@ -1,0 +1,30 @@
+- name: 下載 go {{ version }} 版
+  get_url:
+    url: https://dl.fromer.url/go{{ version }}.linux-amd64.tar.gz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 go {{ version }} 版 到 /data
+  unarchive:
+    src: /data/dl/go{{ version }}.linux-amd64.tar.gz
+    dest: /data
+    remote_src: yes
+
+- name: 做 go 的軟連結
+  file:
+   src: /data/go/bin/go
+   dest: /usr/bin/go
+   owner: root
+   group: root
+   state: link
+
+- name: 取得 go 安裝版本 
+  shell:
+    cmd: go version
+  register: result
+
+- name: 顯示 go 安裝版本
+  debug:
+    var: result
+

@@ -1,0 +1,12 @@
+[Unit]
+Requires=kafka.service
+After=kafka.service
+[Service]
+Type=simple
+User=kafka
+Group=kafka
+ExecStart=/bin/sh -c '/data/kafka/bin/kafka-server-start.sh /data/kafka/config/server.properties > /data/kafka/kafka.log 2>&1'
+ExecStop=/data/kafka/bin/kafka-server-stop.sh
+Restart=on-abnormal
+[Install]
+WantedBy=multi-user.target

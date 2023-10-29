@@ -1,0 +1,51 @@
+---
+
+- name: download kibana
+  get_url:
+    url: https://dl.fromer.url/kibana-7.5.0-linux-x86_64.tar.gz
+    dest: /data/dl/kibana-7.5.0-linux-x86_64.tar.gz
+    username: yidevops
+    password: Log@n0vu3
+
+- name: create kibana dir
+  file:
+    path: /data/kibana
+    state: directory
+
+- name: unzip kibana-7.5.0-linux-x86_64.tar.gz
+  unarchive:
+    src: /data/dl/kibana-7.5.0-linux-x86_64.tar.gz
+    dest: /data/kibana
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: backup kibana.yml
+  copy:
+    src: "/data/kibana/config/kibana.yml"
+    dest: "/data/kibana/config/kibana.yml.bk"
+    remote_src: yes
+
+- name: copy kibana.yml to /data/logstash/config
+  copy:
+    src: "kibana.yml"
+    dest: "/data/kibana/config"
+    remote_src: no
+
+- name: copy kibana.service to /etc/systemd/system/
+  copy:
+    src: "kibana.service"
+    dest: "/etc/systemd/system"
+    remote_src: no
+
+- name: change kibana.service user&group
+  replace:
+    path: /etc/systemd/system/kibana.service
+    regexp: 'sysuser'
+    replace: "{{ user_name }}"
+
+- name: change kibana dir owner
+  file:
+    path: /data/kibana
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true

@@ -1,0 +1,11 @@
+[Unit] 
+Description=/data/openresty/nginx/sbin/nginx
+After=network.target
+[Service]
+Type=forking
+ExecStart=/data/openresty/nginx/sbin/nginx -c /data/openresty/nginx/conf/nginx.conf
+ExecReload=/data/openresty/nginx/sbin/nginx -s reload
+ExecStop=/data/openresty/nginx/sbin/nginx -s stop
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target

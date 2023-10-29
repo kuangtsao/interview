@@ -1,0 +1,40 @@
+- name: 安裝必要的 repo 與 yum-utils
+  yum:
+    name:
+      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+      - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+      - yum-utils
+    state: present
+
+- name: disable php 5.4 & enable php7.3
+  shell: |
+    yum-config-manager --disable remi-php54
+    yum-config-manager --enable remi-php73
+
+- name: 安裝 php 7.3 板
+  yum:
+    name:
+      - php 
+      - php-fpm 
+      - php-mysqlnd 
+      - php-zip 
+      - php-devel 
+      - php-gd 
+      - php-mcrypt
+      - php-mbstring 
+      - php-curl 
+      - php-xml 
+      - php-pear 
+      - php-bcmath 
+      - php-json 
+      - php-pdo 
+      - php-pecl-apcu 
+      - php-pecl-apcu-devel
+    state: present
+
+- name: systemctl enable & start php-fpm
+  systemd:
+    enabled: yes
+    state: started
+    name: php-fpm
+    

@@ -1,0 +1,46 @@
+[client]
+#默認連接端口
+port = 3306
+#用於本地連接的socket套接字
+socket = /data/mysql/mysqld/mysql.sock
+[mysql]
+#設置mysql客戶端默認字符集
+default-character-set=utf8
+[mysqld]
+#使用mysql用戶啟動
+user=mysql
+#跳過權限表校驗
+#skip-grant-tables
+skip-name-resolve
+#設置3306端口
+port = 3306
+#設置mysql的安裝目錄
+basedir=/data/mysql
+#設置mysql數據庫的數據的存放目錄
+datadir=/data/mysql/data
+#socket文件是在Linux/Unix環境下特有的，用戶在Linux/Unix環境下客戶端連接可以不通過TCP/IP網絡而直接使用unix socket連接MySQL。
+socket=/data/mysql/mysqld/mysql.sock
+#允許最大連接數
+max_connections=200
+#服務端使用的字符集默認為8比特編碼的latin1字符集
+character-set-server=utf8
+#創建新表時將使用的默認存儲引擎
+default-storage-engine=INNODB
+#表名存儲在磁盤是小寫的，但是比較的時候是不區分大小寫
+lower_case_table_names=1
+#服務所能處理的請求包的最大大小以及服務所能處理的最大的請求大小
+max_allowed_packet=16M
+#是否支持快捷方式
+symbolic-links=0
+#錯誤日誌路徑
+log-error=/data/mysql/logs/mysqld.log
+#pid文件所在目錄
+pid-file=/data/mysql/mysqld/mysqld.pid
+server-id = 1 # 表示唯一的 Server ID，串連主機中 Server ID 不可重複。
+bind-address = 0.0.0.0 # 開放可以連線的 Network，主要讓 Slave 節點可以與 MySQL Master 進行連線。
+innodb_flush_log_at_trx_commit = 1 # 設定 Commit 寫進磁碟的策略，1 是預設值，會盡力確保資料被寫入 Disk，雖然比較慢但是在 Replication Cluster 中格外重要，這也是 Replication 架構中官方建議的設定。
+sync_binlog = 1 # 表示每次的 Transaction 都會被寫進 IO，有效避免 Crash 時造成的資料損壞，也讓最新的 Binlog 可以被即時同步到其他 Slave 上。但這個參數會嚴重影響效能，特別是在大量的 Transaction 發生時，系統使用 SSD 可以大幅改善這個 IO 效能問題，如果是在 Slave 上就不需要開啟，免得同步動作跟不上 Master。
+#開啟二進制日誌功能，binlog數據位置
+log-bin=/data/mysql/binlog/master-bin
+#設定從資料庫可更新主資料庫的二進位檔案
+log-slave-updates=true

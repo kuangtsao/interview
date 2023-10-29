@@ -1,0 +1,67 @@
+---
+
+- name: download tomcat
+  get_url:
+    url: https://dl.fromer.url/apache-tomcat-8.5.66.tar.gz
+    dest: /data/dl/apache-tomcat-8.5.66.tar.gz
+    username: yidevops
+    password: Log@n0vu3
+
+- name: create tomcat dir
+  file:
+    path: /data/tomcat
+    state: directory
+
+- name: unzip apache-tomcat-8.5.66.tar.gz
+  unarchive:
+    src: /data/dl/apache-tomcat-8.5.66.tar.gz
+    dest: /data/tomcat
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: copy tomcat.service to /etc/systemd/system/
+  copy:
+    src: "tomcat.service"
+    dest: "/etc/systemd/system"
+    remote_src: no
+
+- name: change tomcat.service user&group
+  replace:
+    path: /etc/systemd/system/tomcat.service
+    regexp: 'sysuser'
+    replace: "{{ user_name }}"
+
+- name: change tomcat dir owner
+  file:
+    path: /data/tomcat/
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true
+
+- name: daemon_reload
+  systemd:
+    daemon_reload: yes
+
+- name: backup org.freedesktop.systemd1.policy to tmp
+  copy:
+    src: /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+    dest: /tmp
+    remote_src: yes
+
+- name: sed org.freedesktop.systemd1.policy
+  shell:
+    cmd: |
+      sed -i '60s/auth_admin/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+      sed -i '61s/auth_admin/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+      sed -i '62s/auth_admin_keep/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+
+- name: restart polkit
+  service:
+    name: polkit
+    state: restarted
+
+- name: start tomcat
+  systemd:
+    name: tomcat.service
+    state: started
+    enabled: yes

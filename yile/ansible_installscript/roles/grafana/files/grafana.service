@@ -1,0 +1,21 @@
+[Unit]
+Description=Grafana instance
+Documentation=http://docs.grafana.org
+
+[Service]
+User=grafana
+Group=grafana
+Type=notify
+Restart=on-failure
+WorkingDirectory=/data/grafana
+RuntimeDirectory=grafana
+RuntimeDirectoryMode=0750
+ExecStart=/data/grafana/bin/grafana-server                                                        \
+                            --config=/data/grafana/conf/grafana.ini                               \
+                            --pidfile=/var/run/grafana/grafana.pid
+ 
+LimitNOFILE=10000
+TimeoutStopSec=20
+
+[Install]
+WantedBy=multi-user.target

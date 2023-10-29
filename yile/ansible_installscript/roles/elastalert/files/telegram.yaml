@@ -1,0 +1,20 @@
+es_host: 127.0.0.1
+es_port: 9200
+es_username: elastic
+es_password: Log@n0vu3
+name: name
+type: any
+aggregation:
+  minutes: 1
+index: index
+filter:
+- query:
+    query_string:
+      query: "message: [message]"
+alert:
+- "telegram"
+alert_text: "{0}"
+alert_text_args: "message"
+alert_text_type: alert_text_only
+telegram_bot_token: bot-api
+telegram_room_id: "[chat-id]"

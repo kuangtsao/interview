@@ -1,0 +1,72 @@
+---
+
+- name: 添加服務使用者 'zookeeper'
+  user:
+    name: zookeeper
+    shell: /bin/bash
+
+- name: download zookeeper
+  get_url:
+    url: https://dl.fromer.url/zookeeper.tar.gz
+    dest: /data/dl/zookeeper.tar.gz
+    username: yidevops
+    password: Log@n0vu3
+
+- name: create zookeeper dir
+  file:
+    path: /data/zookeeper
+    state: directory
+
+- name: unzip zookeeper.tar.gz
+  unarchive:
+    src: /data/dl/zookeeper.tar.gz
+    dest: /data/zookeeper
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: copy zoo.cfg to /data/zookeeper/conf/
+  copy:
+    src: "zoo.cfg"
+    dest: "/data/zookeeper/conf"
+    remote_src: no
+
+- name: copy zookeeper.service to /etc/systemd/system/
+  copy:
+    src: "zookeeper.service"
+    dest: "/etc/systemd/system"
+    remote_src: no
+
+- name: change zookeeper dir owner
+  file:
+    path: /data/zookeeper/
+    owner: zookeeper
+    group: zookeeper
+    recurse: true
+
+- name: daemon_reload
+  systemd:
+    daemon_reload: yes
+
+- name: backup org.freedesktop.systemd1.policy to tmp
+  copy:
+    src: /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+    dest: /tmp
+    remote_src: yes
+
+- name: sed org.freedesktop.systemd1.policy
+  shell:
+    cmd: |
+      sed -i '60s/auth_admin/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+      sed -i '61s/auth_admin/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+      sed -i '62s/auth_admin_keep/yes/' /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+
+- name: restart polkit
+  systemd:
+    name: polkit
+    state: restarted
+
+- name: start zookeeper.service
+  systemd:
+    name: zookeeper.service
+    state: started
+    enabled: yes

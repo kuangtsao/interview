@@ -1,0 +1,36 @@
+- name: 下載 promtail 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/promtail-linux-amd64.tar.gz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 添加需要的資料夾
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - /data/promtail
+
+- name: 解壓 promtail 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/promtail-linux-amd64.tar.gz
+    dest: /data/promtail
+    remote_src: yes
+
+- name: 上傳 promtail.yaml 到 {{ ansible_host }}
+  copy:
+    src: "promtail.yaml"
+    dest: "/data/promtail"
+
+- name: 更改 promtail 權限
+  file:
+    path: /data/promtail/
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true
+
+- name: 清理 /data/dl/promtail-linux-amd64.tar.gz
+  file:
+    path: /data/dl/promtail-linux-amd64.tar.gz
+    state: absent

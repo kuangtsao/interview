@@ -1,0 +1,60 @@
+- name: 添加服務使用者 'prometheus' 到 {{ ansible_host }}
+  user:
+    name: prometheus
+    shell: /sbin/nologin
+    create_home: no
+
+- name: 下載 prometheus 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/prometheus-2.26.0.linux-amd64.tar.gz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 prometheus 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/prometheus-2.26.0.linux-amd64.tar.gz
+    dest: /data
+    remote_src: yes
+
+- name: 重新命名 prometheus 資料夾
+  shell:
+    cmd: mv prometheus-2.26.0.linux-amd64 prometheus
+    chdir: /data/
+
+- name: 添加 tsdb 的儲存路徑
+  file:
+    path: /data/prometheus/tsdb
+    state: directory
+
+- name: 更改 prometheus 權限
+  file:
+    path: /data/prometheus/
+    owner: prometheus
+    group: prometheus
+    recurse: true
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "prometheus.service"
+    dest: "/etc/systemd/system"
+  
+- name: 添加 promtool 軟連結，使其 global 可用
+  file:
+    src: /data/prometheus/promtool
+    dest: /usr/bin/promtool
+    owner: root
+    group: root
+    state: link
+
+- name: systemd daemon-reload enable & start prometheus
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: prometheus
+
+- name: 清理 /data/dl/prometheus-2.26.0.linux-amd64.tar.gz
+  file:
+    path: /data/dl/prometheus-2.26.0.linux-amd64.tar.gz
+    state: absent

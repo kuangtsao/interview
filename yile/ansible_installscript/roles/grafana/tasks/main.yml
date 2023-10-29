@@ -1,0 +1,81 @@
+- name: 添加服務使用者 'grafana' 到 {{ ansible_host }}
+  user:
+    name: grafana
+    shell: /sbin/nologin
+    create_home: no
+
+- name: 下載 grafana 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/grafana-8.0.0.linux-amd64.tar.gz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 grafana 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/grafana-8.0.0.linux-amd64.tar.gz
+    dest: /data
+    remote_src: yes
+
+- name: 重新命名 grafana 資料夾
+  shell:
+    cmd: mv grafana-8.0.0 grafana
+    chdir: /data/
+
+- name: 添加需要的資料夾
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - /data/grafana/logs
+  - /data/grafana/lib
+
+- name: 上傳 grafana.ini 到 {{ ansible_host }}
+  copy:
+    src: "grafana.ini"
+    dest: "/data/grafana/conf"
+
+- name: 添加 grafana-cli 軟連結，使其 global 可用
+  file:
+    src: /data/grafana/bin/grafana-cli
+    dest: /usr/bin/grafana-cli
+    owner: root
+    group: root
+    state: link
+
+- name: 安裝 grafana plugin
+  shell: |
+    export GF_PLUGIN_DIR=/data/grafana/data/plugins
+    grafana-cli plugins install alexanderzobnin-zabbix-app
+    grafana-cli plugins install grafana-piechart-panel
+    grafana-cli plugins install grafana-clock-panel
+    grafana-cli plugins install briangann-gauge-panel
+    grafana-cli plugins install natel-discrete-panel
+    grafana-cli plugins install vonage-status-panel
+    grafana-cli plugins install grafana-polystat-panel
+    grafana-cli plugins install digrich-bubblechart-panel
+    grafana-cli plugins install grafana-singlestat-panel
+
+- name: 更改 grafana 權限
+  file:
+    path: /data/grafana/
+    owner: grafana
+    group: grafana
+    recurse: true
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "grafana.service"
+    dest: "/etc/systemd/system"
+  
+- name: systemd daemon-reload enable & start grafana
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: grafana
+
+- name: 清理 /data/dl/grafana-8.0.0.linux-amd64.tar.gz
+  file:
+    path: /data/dl/grafana-8.0.0.linux-amd64.tar.gz
+    state: absent

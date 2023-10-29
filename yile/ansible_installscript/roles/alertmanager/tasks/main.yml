@@ -1,0 +1,55 @@
+- name: 添加服務使用者 'alertmanager' 到 {{ ansible_host }}
+  user:
+    name: alertmanager
+    shell: /sbin/nologin
+    create_home: no
+
+- name: 下載 alertmanager 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/alertmanager-0.21.0.linux-amd64.tar.gz
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 alertmanager 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/alertmanager-0.21.0.linux-amd64.tar.gz
+    dest: /data
+    remote_src: yes
+
+- name: 重新命名 alertmanager 資料夾
+  shell:
+    cmd: mv alertmanager-0.21.0.linux-amd64 alertmanager
+    chdir: /data/
+
+- name: 更改 alertmanager 權限
+  file:
+    path: /data/alertmanager/
+    owner: alertmanager
+    group: alertmanager
+    recurse: true
+
+- name: 添加 amtool 軟連結，使其 global 可用
+  file:
+    src: /data/alertmanager/amtool
+    dest: /usr/bin/amtool
+    owner: root
+    group: root
+    state: link
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "alertmanager.service"
+    dest: "/etc/systemd/system"
+
+- name: systemd daemon-reload enable & start alertmanager
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: alertmanager
+
+- name: 清理 /data/dl/alertmanager-0.21.0.linux-amd64.tar.gz
+  file:
+    path: /data/dl/alertmanager-0.21.0.linux-amd64.tar.gz
+    state: absent

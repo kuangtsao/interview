@@ -1,0 +1,94 @@
+- name: 添加服務使用者 'rabbitmq' 到 {{ ansible_host }}
+  user:
+    name: rabbitmq
+    shell: /sbin/nologin
+
+- name: 添加 rabbitmq 群組給 {{ user_name }}
+  user: 
+    name: "{{ user_name }}"
+    groups: rabbitmq
+    append: yes
+
+- name: 安裝需要的套件
+  yum:
+    name:
+      - gcc
+      - gcc-c++ 
+      - glibc-devel
+      - make
+      - git 
+      - ncurses-devel
+      - openssl-devel 
+      - autoconf
+    state: present
+
+- name: 下載 erlang 安裝包到 {{ ansible_host }}
+  get_url:
+    url: "{{ item }}"
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+  with_items:
+  - https://dl.fromer.url/otp_src_24.0.tar.gz
+  - https://dl.fromer.url/rabbitmq-server-generic-unix-3.9.4.tar.xz
+
+- name: 解壓 erlang,rabbitmq 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/{{ item }}
+    dest: /data
+    remote_src: yes
+  with_items:
+  - otp_src_24.0.tar.gz
+  - rabbitmq-server-generic-unix-3.9.4.tar.xz
+
+- name: 重新命名 erlang,rabbitmq 資料夾
+  shell: |
+    cd /data 
+    mv /data/otp_src_24.0 /data/erlang
+    mv /data/rabbitmq_server-3.9.4 /data/rabbitmq
+
+- name: 改變 erlang 資料夾的 owner
+  file:
+    path: /data/erlang
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true
+
+- name: 編譯 erlang
+  shell: |
+    cd /data/erlang
+    ./otp_build autoconf
+    ./configure
+    make
+    make install
+
+- name: 取得 erlang 安裝版本 
+  shell:
+    cmd: erl -version
+  register: result
+
+- name: 顯示 erlang 安裝版本
+  debug:
+    var: result
+
+- name: 改變 rabbitmq 資料夾的 owner
+  file:
+    path: /data/rabbitmq
+    owner: rabbitmq
+    group: rabbitmq
+    recurse: true
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "rabbitmq.service"
+    dest: "/etc/systemd/system"
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "rabbitmq_env.sh"
+    dest: "/etc/profile.d"
+
+- name: systemd daemon-reload
+  systemd:
+    daemon_reload: yes
+   

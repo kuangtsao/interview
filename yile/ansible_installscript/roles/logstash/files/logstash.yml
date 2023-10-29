@@ -1,0 +1,3 @@
+path.data: /data/logstash/ls-data
+path.logs: /data/logstash/ls-log
+path.config: /data/logstash/config

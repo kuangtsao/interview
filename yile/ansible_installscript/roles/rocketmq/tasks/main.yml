@@ -1,0 +1,93 @@
+- name: 添加服務使用者 'rocketmq' 到 {{ ansible_host }}
+  user:
+    name: rocketmq
+    shell: /sbin/nologin
+    create_home: no
+
+- name: 添加 rocketmq 群組給 {{ user_name }}
+  user: 
+    name: "{{ user_name }}"
+    groups: rocketmq
+    append: yes
+
+- name: 下載 rocketmq 安裝包到 {{ ansible_host }}
+  get_url:
+    url: https://dl.fromer.url/rocketmq-all-4.9.0-bin-release.zip
+    dest: /data/dl
+    username: yidevops
+    password: Log@n0vu3
+
+- name: 解壓 rocketmq 安裝包到 {{ ansible_host }}
+  unarchive:
+    src: /data/dl/rocketmq-all-4.9.0-bin-release.zip
+    dest: /data
+    remote_src: yes
+
+- name: 重新命名 rocketmq 資料夾
+  shell:
+    cmd: mv rocketmq-all-4.9.0-bin-release rocketmq
+    chdir: /data
+
+- name: 修改 rocketmq log 檔寫入路徑
+  shell:
+    cmd: sed -i 's,${user.home}/logs/rocketmqlogs,/data/log/rocketmq,g' *.xml
+    chdir: /data/rocketmq/conf
+
+- name: 添加 rocketmq 需要的資料夾
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - /data/log/rocketmq
+  - /data/rocketmq/store/commitlog
+  - /data/rocketmq/store/consumequeue
+
+- name: 更改 /data/rocketmq 權限
+  file:
+    path: /data/rocketmq/
+    owner: rocketmq
+    group: rocketmq
+    recurse: true
+
+- name: 更改 /data/log/rocketmq 權限
+  file:
+    path: /data/log/rocketmq/
+    owner: rocketmq
+    group: rocketmq
+    recurse: true
+
+- name: 上傳 rocketmq_env.sh 到 /etc/profile.d
+  copy:
+    src: "rocketmq_env.sh"
+    dest: "/etc/profile.d"
+
+- name: 上傳 rocket_kernel.conf 到 /etc/sysctl.d
+  copy:
+    src: "rocket_kernel.conf"
+    dest: "/etc/sysctl.d"
+
+- name: 使 rocket_kernel.conf 生效
+  shell: sysctl --system
+
+- name: 調整 /etc/security/limmits.conf 
+  shell: |
+    echo '* hard nofile 655350' >> /etc/security/limits.conf 
+    echo '* hard memlock      unlimited' >> /etc/security/limits.conf
+    echo '* soft memlock      unlimited' >> /etc/security/limits.conf
+
+- name: 上傳 systemd 檔案到 {{ ansible_host }}
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system"
+  with_items:
+  - rocketmq_nameserver.service
+  - rocketmq_broker.service
+
+- name: systemd daemon-reload enable mongodb
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    name: "{{ item }}"
+  with_items:
+  - rocketmq_nameserver
+  - rocketmq_broker

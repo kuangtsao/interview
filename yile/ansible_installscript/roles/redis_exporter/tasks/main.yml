@@ -1,0 +1,38 @@
+---
+
+- name: download redis_exporter.service
+  get_url:
+    url: https://dl.fromer.url/redis_exporter-v0.13.linux-amd64.tar.gz
+    dest: /data/dl/redis_exporter-v0.13.linux-amd64.tar.gz
+    username: yidevops
+    password: Log@n0vu3
+
+- name: create redis_exporter.service dir
+  file:
+    path: /data/redis_exporter
+    state: directory
+
+- name: tar.gz redis_exporter-v0.13.linux-amd64.tar.gz
+  unarchive:
+    src: /data/dl/redis_exporter-v0.13.linux-amd64.tar.gz
+    dest: /data/redis_exporter
+    remote_src: yes
+  
+- name: copy redis_exporter.service to /etc/systemd/system/
+  copy:
+    src: "redis_exporter.service"
+    dest: "/etc/systemd/system"
+    remote_src: no
+
+- name: change redis_exporter.service user&group
+  replace:
+    path: /etc/systemd/system/redis_exporter.service
+    regexp: 'sysuser'
+    replace: "{{ user_name }}"
+
+- name: change redis_exporter.service dir owner
+  file:
+    path: /data/redis_exporter
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    recurse: true

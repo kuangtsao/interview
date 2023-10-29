@@ -1,0 +1,11 @@
+[Unit]
+Description=Node Exporter
+Documention=https://github.com/prometheus/node_exporter/blob/master/README.md
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/data/node_exporter/node_exporter
+
+[Install]
+WantedBy=multi-user.target

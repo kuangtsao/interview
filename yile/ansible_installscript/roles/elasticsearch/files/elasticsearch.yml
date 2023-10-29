@@ -1,0 +1,15 @@
+cluster.name: my-es
+node.name: node-1
+path.data: /data/elasticsearch/es-data
+path.logs: /data/elasticsearch/es-log
+bootstrap.memory_lock: false
+network.host: 0.0.0.0
+http.port: 9200
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+cluster.initial_master_nodes: ["node-1"]
+xpack.security.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.security.transport.ssl.keystore.path: elastic-certificates.p12
+xpack.security.transport.ssl.truststore.path: elastic-certificates.p12

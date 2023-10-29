@@ -1,0 +1,24 @@
+[Unit]
+Description=Elasticsearch Server
+After=network.target
+[Service]
+Type=forking
+Environment=JAVA_HOME=/data/java/
+ExecStart=/data/elasticsearch/bin/elasticsearch -p /data/elasticsearch/elasticsearch.pid -d
+ExecStop=kill -SIGTERM cat /data/elasticsearch/elasticsearch.pid
+Restart=always
+User=sysuser
+Group=sysuser
+StandardOutput=journal
+StandardError=inherit
+LimitNOFILE=102400
+LimitNPROC=102400
+LimitAS=infinity
+LimitFSIZE=infinity
+TimeoutStopSec=0
+KillSignal=SIGTERM
+KillMode=process
+SendSIGKILL=no
+SuccessExitStatus=143
+[Install]
+WantedBy=multi-user.target

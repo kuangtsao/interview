@@ -1,0 +1,11 @@
+[Unit]
+Description=Alertmanager
+
+[Service]
+User=alertmanager
+Group=alertmanager
+Type=simple
+ExecStart=/data/alertmanager/alertmanager --config.file=/data/alertmanager/alertmanager.yml --web.external-url http://0.0.0.0:9093
+
+[Install]
+WantedBy=multi-user.target

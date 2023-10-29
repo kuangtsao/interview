@@ -1,0 +1,7 @@
+---
+- name: install java
+  hosts: "{{ ansible_host }}"
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  roles:
+    - role: java

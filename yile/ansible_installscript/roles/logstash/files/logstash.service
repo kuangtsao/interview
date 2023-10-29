@@ -1,0 +1,24 @@
+[Unit]
+Description=logstash
+
+[Service]
+#Type=simple
+User=sysuser
+Group=sysuser
+Environment=JAVA_HOME=/data/java
+Environment=LS_HOME=/data/logstash
+Environment=LS_SETTINGS_DIR=/data/logstash/config/
+Environment=LS_PIDFILE=/data/logstash/logstash.pid
+Environment=LS_GC_LOG_FILE=/data/logstash/logs/gc.log
+Environment=LS_OPEN_FILES=163840
+Environment=LS_NICE=19
+Environment=SERVICE_NAME=logstash
+Environment=SERVICE_DESCRIPTION=logstash
+ExecStart=/data/logstash/bin/logstash -f /data/logstash/conf.d/*.conf
+Restart=always
+WorkingDirectory=/data/logstash
+Nice=19
+LimitNOFILE=163840
+
+[Install]
+WantedBy=multi-user.target
