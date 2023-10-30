@@ -1,0 +1,107 @@
+- name: check vars/{{ product }}.yml exists
+  stat:
+    path: "{{ role_path }}/vars/{{ product }}.yml"
+  register: vars_yml
+  delegate_to: 127.0.0.1
+
+- name: check the var whether exists  
+  debug:
+    msg: "vars_yml:{{ vars_yml.stat.exists }}"
+
+- include_vars: "{{ role_path }}/vars/{{ product }}.yml"
+  when: vars_yml.stat.exists
+
+- include_vars: "{{ role_path }}/vars/bots.yml"
+
+- set_fact:
+    access_token: "{{ telegram_bot[bot].access_token }}"
+    chat_id: "{{ telegram_bot[bot].chat_id }}"
+  
+- name: get today's date in jenkins
+  shell: date +%Y%m%d_%H%M%S
+  register: date_string
+  delegate_to: 127.0.0.1
+
+- name: check {{ hotfix_upload_path }} whether exists
+  block:
+    - name: check {{ hotfix_upload_path }} whether exists
+      stat:
+        path: "{{ hotfix_upload_path }}"
+      register: path_existence
+      failed_when: path_existence.stat.exists == false
+      delegate_to: 127.0.0.1
+  rescue:
+    - name: send error message to telegram channel
+      uri:
+        url: https://api.telegram.org/bot{{ access_token }}/sendMessage
+        method: POST
+        body_format: json
+        body:
+          chat_id: "{{ chat_id }}" 
+          text: 停止 hotfix 上版流程。{{ version }} 的路徑不存在，請確認是否有上傳或是打錯版號；如果都有請呼叫維運人員。
+          disable_notification: true
+    - fail:
+       msg: "停止 hotfix 上版流程。{{ version }} 的路徑不存在，請確認是否有上傳或是打錯版號；如果都有請呼叫維運人員。"
+
+- name: check hall is match for site,if not,fail
+  block:
+    - name: check hall-v{{ version }}.zip is pack with the {{ hs_url }}
+      shell: unzip -p {{ hotfix_upload_path }}/hall-v{{ version }}.zip src/c/ngc.jsc | grep '{{ hs_url }}'
+      register: check_result
+      args:
+        warn: false
+      failed_when: check_result.rc == 1
+      delegate_to: 127.0.0.1
+  rescue:
+    - name: send error message to telegram channel
+      uri:
+        url: https://api.telegram.org/bot{{ access_token }}/sendMessage
+        method: POST
+        body_format: json
+        body:
+          chat_id: "{{ chat_id }}" 
+          text: 停止 hotfix 上版流程。src/c/ngc.jsc 的 hs url 不是 {{ product }} 的 {{ hs_url }}。請檢查後重新打包，再執行一次更新流程。
+          disable_notification: true
+    - fail:
+       msg: "停止 hotfix 上版流程。src/c/ngc.jsc 的 hs url 不是 {{ product }} 的 {{ hs_url }}。請檢查後重新打包，再執行一次更新流程。" 
+
+- name: check hall-{{ env }}.zip result
+  debug:
+    msg: "result={{ check_result.stdout }}"
+
+- name: backup old version of hotfix's index.html
+  copy:
+    src: "{{ update_path }}/newUpdate.html"
+    dest: "{{ update_path }}/newUpdate.html.bk{{ date_string.stdout_lines[0] }}"
+    remote_src: yes
+
+- name: show files in new version hotfix directory
+  find:
+    paths: 
+      - "{{ hotfix_upload_path }}"
+  register: my_find
+  delegate_to: 127.0.0.1
+
+- name: check files in new version hotfix directory
+  debug:
+    #var: item.path
+    msg: "path={{ item.path }}"
+  with_items: "{{ my_find.files }}"
+
+- name: copy all files in new version hotfix directory
+  copy:
+    src: "{{ item }}"
+    dest: "{{ update_path }}"
+  with_fileglob:
+    - "{{ hotfix_upload_path }}/*"
+
+- name: send success message to telegram
+  uri:
+    url: https://api.telegram.org/bot{{ access_token }}/sendMessage
+    method: POST
+    body_format: json
+    body:
+      chat_id: "{{ chat_id }}"
+      text: hotfix {{ version }} 已上傳到 {{ product }} 環境，更新完成。
+      disable_notification: true
+  

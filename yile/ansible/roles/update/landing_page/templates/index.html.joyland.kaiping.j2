@@ -1,0 +1,522 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8">
+  <!-- 引入 Bootstrap -->
+  <link href="css/bootstrap.min.css"
+  rel="stylesheet">
+  <link rel="shortcut icon" href="img/ico/favicon.png" type="image/x-icon"/>
+  <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+  <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+  <title>欢乐天地</title>
+
+  <style>
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bg {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    max-width: 640px;
+    height: 1275px;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background-image: url("img/bg_02.jpg");
+    background-size: 100% 100%;
+  }
+  .bg_01 {
+    position: absolute;
+    z-index: 2;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+
+  .heart {
+    position: relative;
+    animation: beat .6s infinite ease-in;
+  }
+
+  .heart:before, .heart:after {
+    content: "";
+    position: absolute;
+  }
+
+  .heart:before {
+    left: 30px;
+  }
+
+  .heart:after {
+    top: -30px;
+  }
+
+  @keyframes beat {
+    0% {
+      transform: scale(1) rotate(0deg);
+    }
+    10% {
+      transform: scale(1) rotate(0deg);
+    }
+    20% {
+      transform: scale(1.1) rotate(0deg);
+    }
+    30% {
+      transform: scale(1.2) rotate(0deg);
+    }
+    35% {
+      transform: scale(1.2) rotate(10deg);
+    }
+    40% {
+      transform: scale(1.2) rotate(0deg);
+    }
+    45% {
+      transform: scale(1.2) rotate(10deg);
+    }
+    50% {
+      transform: scale(1.2) rotate(0deg);
+    }
+    55% {
+      transform: scale(1.2) rotate(-10deg);
+    }
+    60% {
+      transform: scale(1.2) rotate(0deg);
+    }
+    70% {
+      transform: scale(1.2) rotate(-10deg);
+    }
+    80% {
+      transform: scale(1.1) rotate(0deg);
+    }
+    90% {
+      transform: scale(1) rotate(0deg);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+  .img-responsive {
+    width: 40%;
+    display: block;
+  }
+
+  .btn img {
+    position: absolute;
+    top: 63%;
+    left: 30%;
+    width: 40%;
+  }
+
+  .foot {
+    max-width: 640px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 990;
+  }
+
+  .kuang {
+    width: 250px;
+    top: 180px;
+    position: fixed;
+    right: 0px;
+    z-index: 999;
+    opacity: 0.8;
+    height: 480px;
+    background-image: url("img/download_bg.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin-left: 500px;
+  }
+
+  .urlqrcode {
+    width: :180px;
+    top: 230px;
+    position: fixed;
+    right: 30px;
+    height: 180;
+    z-index: 999;
+  }
+
+  .crmlink {
+    top: 95px;
+    width:90px;
+    height:90px;
+    position: fixed;
+    right: 0px;
+    z-index: 999;
+    opacity: 0.8;
+    background-repeat: no-repeat;
+  }
+
+  .download {
+    top: 280px;
+    left: 19px;
+    position: relative;
+    z-index: 999;
+    opacity: 0.8;
+  }
+
+  .foot-left-img img {
+    height: 100px;
+    background-size: 100% 100%;
+  }
+
+  .foot-title, .foot-remark {
+    color: white;
+    margin: auto;
+  }
+
+  .foot-title {
+    font-size: 23px;
+  }
+
+  @media ( max-width: 619px ) {
+    .kuang {
+      display: none
+    }
+
+    .bg {
+      height: 900px;
+    }
+  }
+
+  .text-center {
+    margin: 0;
+    padding: 0;
+    width: -webkit-calc(100% - 98px);
+    width: -moz-calc(100% - 98px);
+    width: calc(100% - 98px);
+    float: right;
+  }
+
+  img {
+    margin: 0;
+    padding: 0;
+    display: "block";
+  }
+
+  .downbtnBottom-pc {
+    position: absolute;
+    max-height:60px;
+    width: 100%;
+    top: 25px;
+    left: 390px;
+    z-index:999
+  }
+
+  .downbtnBottom {
+    position: absolute;
+    max-height:30px;
+    width: 100%;
+    top: 55px;
+    left: 255px;
+    z-index:999
+  }
+
+  </style>
+
+</head>
+<body class="container" style="margin:0;padding:0;">
+  <div id="downloadBody" onclick="downloadBody();">
+    <div class="bg_01" onclick="getAgentInfo()">
+      <img src="img/bg_01.jpg" width="100%" height="auto" />
+      <img src="img/bg_02.jpg" width="100%" height="80" />
+      <a id="downloadBtn" style="margin:0;padding:0;">
+        <div class="btn">
+          <img class="heart img-responsive" src="img/icon_03.png">
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="crmlink" id="crmlinkId" onclick="linkCrm()">
+    <img src="img/icon_04.png" style="width:100%; height:auto;" />
+  </div>
+
+  <div class="kuang" id="kuangId">
+    <div class="download">
+      <a id="ios">
+        <div class="down-android">
+          <img src="img/download_icon_01.png">
+        </div>
+      </a>
+      <a id="andriod">
+        <div class="down-ios">
+          <img src="img/download_icon_02.png">
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="urlqrcode" id="urlqrId">
+    <img id="androidqr" width="180"/>
+  </div>
+
+  <div class="foot" onclick="downloadBody()">
+      <img src="img/bg.png" alt="">
+    <div style="position: absolute; max-width: 80px; top:10px; left:10px; z-index:999; ">
+      <img style="width:100%; height:auto;" src="img/logo.png" alt="">
+    </div>
+    <div style="position: absolute; max-height:15px; width: 100%; top:75px; left: 120px; z-index:999">
+      <img src="img/icon_01.png" alt="">
+    </div>
+    <div style="position: absolute; max-height:15px; width: 100%; top:75px; left: 180px; z-index:999">
+      <img src="img/icon_02.png" alt="">
+    </div>
+    <div class="downbtnBottom" id="downbtnBottomId">
+      <img src="img/icon_03.png" id="downbtnImgId" alt="">
+    </div>
+  </div>
+
+</body>
+<script src="jquery/jquery-1.8.0.min.js"></script>
+<script type="application/javascript">
+var userAgentInfo = navigator.userAgent;
+
+var device = '';
+
+// 修改渠道碼下載位置 Android & iOS - [Start]
+var androidUrl = "{{ item.value.android_url }}";
+var iosUrl = "{{ item.value.ios_url }}";
+// 修改渠道碼下載位置 Android & iOS - [End]
+
+var crmUrl = "";
+var qrUrl = "img/devchk_qr.jpg";
+var hsUrl = "{{ item.value.hs_url }}";
+
+var context = {"clientId":"1"};
+
+// 取得Get參數  
+var url = new URL(window.location.href);
+  var inviteCode = url.searchParams.get("inviteCode");  
+console.log(inviteCode);
+
+
+/**
+* 初始化方法获取代理信息
+* */
+// $(function () {
+//   var clientId = getQueryVariable("inviteCode");
+//   console.log("获取的代理id:" + clientId);
+//   if (clientId) {
+//     context.clientId = clientId;
+//   }
+//   console.log("初始化后的context:" + JSON.stringify(context));
+// });
+
+/**
+* 获取地址栏的请求参数
+* */
+function getQueryVariable(variable)
+{
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if(pair[0] == variable){return pair[1];}
+  }
+  return(false);
+}
+
+/**
+* 获取当前访问设备
+*/
+var checkDevice = function() {
+  var allDevice = ["Windows", "Android", "iPhone", "iPad", "iPod", "Macintosh"];
+
+  for (var v = 0; v < allDevice.length; v++) {
+    if (userAgentInfo.indexOf(allDevice[v]) > 0) {
+      device = allDevice[v];
+      break;
+    }
+  }
+  doGetCrmUrl();
+//  doGetDownloadUrl();
+  doSetDownloadUrl();
+};
+
+/**
+* 取得客服連結
+*/
+var doGetCrmUrl = function() {
+  $.ajax({
+    url: hsUrl + "/system/getCustomerServiceConfig/v1",
+    type: 'POST',
+    dataType: 'json',
+    async: false,
+    success: function (data) {
+      if (data != null && data.code == 10000) {
+        crmUrl = data.result;
+      }
+    }
+  });
+};
+
+/**
+* 获取下载地址
+*/
+var doGetDownloadUrl = function() {
+  $.ajax({
+    url: hsUrl + "/app/getDownloadUrl/v1",
+    type: 'get',
+    dataType: 'json',
+    async: false,
+    success: function (data) {
+      if (data != null) {
+        var list = data.msg;
+        if (list != null) {
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].app_type == "Android") {
+              androidUrl = list[i].app_url;
+            }
+            if (list[i].app_type == "ios") {
+              iosUrl = list[i].app_url;
+            }
+          }
+        }
+      }
+    }
+  });
+};
+
+/**
+* 下载地址动态赋值
+*/
+var doSetDownloadUrl = function () {
+  if (device == "Windows" || device == "Macintosh") {
+    // 添加pc端下载地址
+    console.log("pc端");
+    $("#kuangId").show();
+    $("#urlqrId").show();
+    $("#downloadBtn").attr("href", androidUrl);
+    $("#downloadBody").val(androidUrl);
+    $("#andriod").attr("href", androidUrl);
+    $("#ios").attr("href", iosUrl);
+    $("#androidqr").attr("src", qrUrl);
+    // onclick 禁用
+    $(".bg").attr("onclick", "null");
+    $("#downbtnBottomId").attr("class", "downbtnBottom-pc");
+    $("#downbtnImgId").attr("style", "width:220px");
+  } else if (device == "Android") {
+    // 添加Android下载地址
+    console.log("Android");
+    $("#kuangId").hide();
+    $("#urlqrId").hide();
+    $("#andriod").attr("href", androidUrl);
+    $("#downloadBtn").attr("href", androidUrl);
+    $("#downloadBody").val(androidUrl);
+    // onclick 禁用
+    $(".bg").attr("onclick", "null");
+    $("#downbtnBottomId").attr("class", "downbtnBottom");
+    $("#downbtnImgId").attr("style", "width:130px");
+  } else {
+    // 添加ios下载地址
+    console.log("ios");
+    $("#kuangId").hide();
+    $("#urlqrId").hide();
+    $("#ios").attr("href", iosUrl);
+    $("#downloadBtn").attr("href", iosUrl);
+    $("#downloadBody").val(iosUrl);
+    $("#downbtnBottomId").attr("class", "downbtnBottom");
+    $("#downbtnImgId").attr("style", "width:130px");
+  }
+};
+
+checkDevice();
+
+// 覆寫剪貼簿方法，新增iOS判斷條件 
+window.Clipboard = (function(window, document, navigator) {
+  var textArea, copy;
+  function isOS() {
+    return navigator.userAgent.match(/ipad|iphone/i);
+  }
+  function createTextArea(text) {
+    textArea = document.createElement('textArea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+  }
+  function selectText() {
+    var range, selection;
+    if (isOS()) {
+      range = document.createRange();
+      range.selectNodeContents(textArea);
+      selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      textArea.setSelectionRange(0, 999999);
+    } else {
+      textArea.select();
+    }
+  }
+  function copyToClipboard() {
+    document.execCommand("Copy");
+    document.body.removeChild(textArea);
+  }
+  copy = function(text) {
+    createTextArea(text);
+    selectText();
+    copyToClipboard();
+  };
+  return {
+    copy: copy
+  };
+})(window, document, navigator);
+
+/**
+* 复制内容到粘贴板
+*/
+var getAgentInfo = function() {
+  var copyContext = JSON.stringify(JSON.stringify(context));
+  copyContext = copyContext.substring(1, copyContext.length - 1);
+  console.log("context:" + copyContext);
+
+  //檢查是否有邀請碼
+  if(inviteCode == null || inviteCode == "" || inviteCode == undefined){
+    //無邀請碼帶入{"clientId":"1"}
+    window.Clipboard.copy(copyContext);
+  } else {
+    //邀請碼複製到剪貼簿
+    var contextWithInvitecode = "{\\\"clientId\\\":\\\"" + inviteCode + "\\\"}";
+    window.Clipboard.copy(contextWithInvitecode);
+  }
+  console.log("======内容複製到剪貼簿======");
+};
+
+console.log('这部设备是：' + device);
+console.log('设备信息：' + userAgentInfo);
+
+function downloadBody(){
+  getAgentInfo();
+  window.location.assign($("#downloadBody").val());
+}
+
+function linkCrm() {
+  window.location.assign(crmUrl);
+}
+</script>
+</html>
+<div style="display:none">
+<script type="text/javascript" src="{{ item.value.tracking_url }}"></script>
+</div>

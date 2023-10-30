@@ -10,8 +10,8 @@ BOT=$2
 SVN_PATH="/data/svn/yg001"
 
 if [ $BOT == 1 ]; then
-  BOT_TOKEN="https://api.telegram.org/bot1864086086:AAGu2_VFuSlDcLHYLWu3rDdjVNfjpGW3T9U/sendMessage"
-  CHAT_ID="-443492941"
+  BOT_TOKEN="https://api.telegram.org/botbot_token/sendMessage"
+  CHAT_ID="chatroom"
 else
   echo "BOT 填錯了，目前為：$BOT"
   exit 0
@@ -23,8 +23,8 @@ if [ $ENVIORMENT == "UAT" ]; then
   USER=centos
   HOSTS=(
     "yg-t-game01|some.remote.public.ip|/mnt/yile/ssh_key/B/UAT_key.pem"
-    "yg-t-java01|54.179.73.50|/mnt/yile/ssh_key/B/yg-t-java01.pem"
-    "yg-t-proxyweb01|52.76.174.81|/mnt/yile/ssh_key/B/yg-t-proxyweb01.pem"
+    "yg-t-java01|[host ip]|/mnt/yile/ssh_key/B/yg-t-java01.pem"
+    "yg-t-proxyweb01|[host ip]|/mnt/yile/ssh_key/B/yg-t-proxyweb01.pem"
   )
   
 elif [ $ENVIORMENT == "DEMO" ]; then
@@ -32,16 +32,16 @@ elif [ $ENVIORMENT == "DEMO" ]; then
   USER=centos
   HOSTS=(
     "yg-demo|some.remote.public.ip|/mnt/yile/ssh_key/B/Demo_key.pem"
-    "yg-t-proxyweb01|52.76.174.81|/mnt/yile/ssh_key/B/yg-t-proxyweb01.pem"
+    "yg-t-proxyweb01|[host ip]|/mnt/yile/ssh_key/B/yg-t-proxyweb01.pem"
   )
 elif [ $ENVIORMENT == "PRD" ]; then
   echo "in PRD"
   USER=centos
   HOSTS=(
-    "YG_prd_webproxy|18.136.130.196|/mnt/yile/ssh_key/B/prd-yg-proxy.pem" 
-    "YG_prd_bs|13.212.122.25|/mnt/yile/ssh_key/B/prd-yg-bs.pem" 
+    "YG_prd_webproxy|[host ip]|/mnt/yile/ssh_key/B/prd-yg-proxy.pem" 
+    "YG_prd_bs|[host ip]|/mnt/yile/ssh_key/B/prd-yg-bs.pem" 
     "yg-prd-central-gs|some.remote.public.ip|/mnt/yile/ssh_key/B/prd-yg-central-GS"
-    "yg-prd-auth|18.140.235.153|/mnt/yile/ssh_key/B/prd-yg-auth.pem"
+    "yg-prd-auth|[host ip]|/mnt/yile/ssh_key/B/prd-yg-auth.pem"
   )
 else
   echo "環境變數不正確"

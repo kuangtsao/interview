@@ -1,0 +1,5 @@
+- name: update application file to desired patch server
+  hosts: "{{ hosts_name }}" 
+  remote_user: "{{ ansible_user }}"
+  roles: 
+    - role: application

@@ -1,0 +1,10 @@
+telegram_bot:
+  '1':
+    access_token: "bot_token"
+    chat_id: "chatroom"
+  '2':
+    access_token: "bot_token"
+    chat_id: "chatroom"
+  '3':
+    access_token: "bot_token"
+    chat_id: "chatroom"

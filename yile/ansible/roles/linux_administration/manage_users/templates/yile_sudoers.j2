@@ -1,0 +1,6 @@
+Cmnd_Alias CMDREADONLY = /bin/df,/usr/bin/free,/usr/bin/top,/bin/hostname,/bin/netstat,/usr/bin/tail,/bin/grep,/bin/cat,/bin/ls
+{% for item in readonly %}
+{% if item.sudo %}
+{{ item.name }} ALL=(ALL) NOPASSWD:CMDREADONLY
+{% endif %}
+{% endfor %}

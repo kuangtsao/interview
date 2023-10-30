@@ -30,13 +30,13 @@ if [ $ENVIORMENT == "TEST" ]; then
 elif [ $ENVIORMENT == "UAT" ]; then
   echo "in UAT"
   USER=centos
-  HOST=54.179.73.50
+  HOST=[host ip]
   IDENTITY_FILE_PATH="/mnt/yile/ssh_key/B/yg-t-java01.pem"
   DEPLOY_PATH="/data/tomcat-develop-backend"
 elif [ $ENVIORMENT == "PRD" ]; then
   echo "in PRD"
   USER=centos
-  HOST=13.212.122.25
+  HOST=[host ip]
   IDENTITY_FILE_PATH="/mnt/yile/ssh_key/B/prd-yg-bs.pem"
   DEPLOY_PATH="/data/develop-bs"
 else

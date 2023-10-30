@@ -1,0 +1,6 @@
+playbook/test/*
+inventory/test_env.yml
+roles/update/hotfix/vars/test.yml
+roles/update/application/vars/test.yml
+roles/update/application/source_shell
+roles/update/landing_page/templates/origin_html

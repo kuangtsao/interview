@@ -1,0 +1,27 @@
+all:
+  hosts:
+    jl_test_java:
+      ansible_host: [host ip]
+      ansible_user: root 
+      ansible_become_password: "{{ demo_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-demo
+    jl_test_game:
+      ansible_host: [host ip]
+      ansible_user: root 
+      ansible_become_password: "{{ demo_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-demo
+    jl_test_db01:
+      ansible_host: [host ip]
+      ansible_user: root 
+      ansible_become_password: "{{ demo_sudo_password_2 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-demo
+    jl_test_db02:
+      ansible_host: [host ip]
+      ansible_user: root 
+      ansible_become_password: "{{ demo_sudo_password_2 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-demo
+    jl-test-proxy01:
+      ansible_host: [host ip]
+      ansible_user: qwerjl 
+      ansible_become_password: "{{ demo_sudo_password_3 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-demo

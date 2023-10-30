@@ -1,0 +1,4 @@
+version: "2.52.1.0"
+deploy_path: "/data/download/android"
+apk_upload_path: "/mnt/yile/ClientRelease/Official/{{ product }}/{{ version }}/Android"
+apk_name_prefix: "99"

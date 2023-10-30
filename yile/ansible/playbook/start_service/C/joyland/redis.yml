@@ -1,0 +1,17 @@
+- name: close redis on hltd-redis-1
+  hosts: hltd-redis-1
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+   - name: start redis
+     shell: /data/redis/bin/redis-server /data/redis/conf/redis.conf
+
+- name: close redis on hltd-redis-2
+  hosts: hltd-redis-2
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+   - name: start redis
+     shell: /data/redis/bin/redis-server /data/redis/conf/redis.conf

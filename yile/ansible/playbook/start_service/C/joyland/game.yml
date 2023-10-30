@@ -1,0 +1,256 @@
+- name: start games on hltd-server
+  hosts: hltd-gameserver
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+    - name: start douDiZhu ddz_cfgArea84 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/01_douDiZhu/logs/ddz_cfgArea84
+    - name: start douDiZhu ddz_cfgAreaMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/01_douDiZhu/logs/ddz_cfgAreaMgr
+    - name: start douDiZhu ddz_cfgDbMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/01_douDiZhu/logs/ddz_cfgDbMgr
+    - name: start douDiZhu gameserver
+      shell:
+        cmd: runalljk.sh
+        chdir: /data/deploy/01_douDiZhu
+
+    - name: start paoDeKuai pdk_cfgArea84 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/02_paoDeKuai/logs/pdk_cfgArea84
+
+    - name: start paoDeKuai pdk_cfgArea85 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/02_paoDeKuai/logs/pdk_cfgArea85
+
+    - name: start paoDeKuai pdk_cfgArea86 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/02_paoDeKuai/logs/pdk_cfgArea86
+       
+    - name: start paoDeKuai pdk_cfgAreaMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/02_paoDeKuai/logs/pdk_cfgAreaMgr
+  
+    - name: start paoDeKuai pdk_cfgDbMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/02_paoDeKuai/logs/pdk_cfgDbMgr
+
+    - name: start paoDeKuai gameserver
+      shell:
+        cmd: runalljk.sh
+        chdir: /data/deploy/02_paoDeKuai
+
+    - name: start zhaJinHua zjh_cfgArea8011101 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/3_zhaJinHua/logs/zjh_cfgArea8011101
+
+    - name: start zhaJinHua zjh_cfgArea8011201 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/3_zhaJinHua/logs/zjh_cfgArea8011201
+
+    - name: start zhaJinHua zjh_cfgArea8011301 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/3_zhaJinHua/logs/zjh_cfgArea8011301
+
+    - name: start zhaJinHua zjh_cfgArea8011401 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/3_zhaJinHua/logs/zjh_cfgArea8011401
+
+    - name: start zhaJinHua zjh_cfgAreaMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/3_zhaJinHua/logs/zjh_cfgAreaMgr
+
+    - name: start zhaJinHua zjh_cfgDbMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/3_zhaJinHua/logs/zjh_cfgDbMgr
+
+    - name: start zhaJinHua gameserver
+      shell:
+        cmd: runalljk.sh
+        chdir: /data/deploy/3_zhaJinHua
+
+    - name: start deZhouPuKe dzpk_cfgArea4000 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/4_deZhouPuKe/logs/dzpk_cfgArea4000
+
+    - name: start deZhouPuKe dzpk_cfgArea4001 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/4_deZhouPuKe/logs/dzpk_cfgArea4001
+
+    - name: start deZhouPuKe dzpk_cfgArea4002 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/4_deZhouPuKe/logs/dzpk_cfgArea4002
+
+    - name: start deZhouPuKe dzpk_cfgArea4003 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/4_deZhouPuKe/logs/dzpk_cfgArea4003
+
+    - name: start deZhouPuKe dzpk_cfgAreaMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/4_deZhouPuKe/logs/dzpk_cfgAreaMgr
+
+    - name: start deZhouPuKe dzpk_cfgDbMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/4_deZhouPuKe/logs/dzpk_cfgDbMgr
+
+    - name: start deZhouPuKe gameserver
+      shell:
+        cmd: runalljk.sh
+        chdir: /data/deploy/4_deZhouPuKe
+
+    - name: start dn_qiangZhuang dn_cfgArea84 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/5_dn_qiangZhuang/logs/dn_cfgArea84
+
+    - name: start dn_qiangZhuang dn_cfgArea85 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/5_dn_qiangZhuang/logs/dn_cfgArea85
+
+    - name: start dn_qiangZhuang dn_cfgArea86 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/5_dn_qiangZhuang/logs/dn_cfgArea86
+
+    - name: start dn_qiangZhuang dn_cfgAreaMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/5_dn_qiangZhuang/logs/dn_cfgAreaMgr
+
+    - name: start dn_qiangZhuang dn_cfgDbMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/5_dn_qiangZhuang/logs/dn_cfgDbMgr
+
+    - name: start dn_qiangZhuang gameserver
+      shell:
+        cmd: runalljk.sh
+        chdir: /data/deploy/5_dn_qiangZhuang
+
+    - name: start dn_baiRen dnbr_cfgArea83 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/06_dn_baiRen/logs/dnbr_cfgArea83
+
+    - name: start dn_baiRen dnbr_cfgArea84 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/06_dn_baiRen/logs/dnbr_cfgArea84
+
+    - name: start dn_baiRen dnbr_cfgAreaMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/06_dn_baiRen/logs/dnbr_cfgAreaMgr
+
+    - name: start dn_baiRen dnbr_cfgDbMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/06_dn_baiRen/logs/dnbr_cfgDbMgr
+
+    - name: start dn_baiRen gameserver
+      shell:
+        cmd: runalljk.sh
+        chdir: /data/deploy/06_dn_baiRen
+
+    - name: start benChiBaoMa bcbm_AreaMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/7_benChiBaoMa/logs/bcbm_AreaMgr
+
+    - name: start benChiBaoMa bcbm_cfgArea701010 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/7_benChiBaoMa/logs/bcbm_cfgArea701010
+
+    - name: start benChiBaoMa bcbm_DbMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/7_benChiBaoMa/logs/bcbm_DbMgr
+
+    - name: start benChiBaoMa gameserver
+      shell:
+        cmd: runalljk.sh
+        chdir: /data/deploy/7_benChiBaoMa
+
+    - name: start longHuDou lhd_cfgArea801010 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/8_longHuDou/logs/lhd_cfgArea801010
+
+    - name: start longHuDou lhd_cfgAreaMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/8_longHuDou/logs/lhd_cfgAreaMgr
+
+    - name: start longHuDou lhd_cfgDbMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/8_longHuDou/logs/lhd_cfgDbMgr
+
+    - name: start longHuDou gameserver
+      shell:
+        cmd: runalljk.sh
+        chdir: /data/deploy/8_longHuDou
+
+    - name: start hongHeiDaZhan hhdz_cfgArea901010 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/9_hongHeiDaZhan/logs/hhdz_cfgArea901010
+
+    - name: start hongHeiDaZhan hhdz_cfgAreaMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/9_hongHeiDaZhan/logs/hhdz_cfgAreaMgr
+
+    - name: start hongHeiDaZhan hhdz_cfgDbMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/9_hongHeiDaZhan/logs/hhdz_cfgDbMgr
+
+    - name: start hongHeiDaZhan gameserver
+      shell:
+        cmd: runalljk.sh
+        chdir: /data/deploy/9_hongHeiDaZhan
+
+    - name: start baiJiaLe bjl_cfgArea1001010 errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/10_baiJiaLe/logs/bjl_cfgArea1001010
+
+    - name: start baiJiaLe bjl_cfgAreaMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/10_baiJiaLe/logs/bjl_cfgAreaMgr
+
+    - name: start baiJiaLe bjl_cfgDbMgr errorlog server
+      shell:
+        cmd: runall.sh
+        chdir: /data/deploy/10_baiJiaLe/logs/bjl_cfgDbMgr
+
+    - name: start douDiZhu gameserver
+      shell:
+        cmd: runalljk.sh
+        chdir: /data/deploy/10_baiJiaLe

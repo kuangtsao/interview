@@ -1,0 +1,4 @@
+version: "2.53.0.0"
+deploy_path: "/data/download/andriod"
+apk_upload_path: "/mnt/yile/ClientRelease/Official/{{ product }}/{{ version }}/Android/{{ env }}"
+apk_name_prefix: "jl"

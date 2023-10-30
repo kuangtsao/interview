@@ -1,0 +1,101 @@
+- name: start apollo on hltd-apollo
+  hosts: hltd-apollo
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: start joyland apollo
+     shell:
+       cmd: demo.sh
+       chdir: /data/apollo
+
+- name: start agent on hltd-agent
+  hosts: hltd-gameserver
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+   - name: start agent tomcat
+     shell:
+       cmd: startup.sh
+       chdir: /data/deploy/AgentServer/bin
+
+- name: start agent on hltd-bs
+  hosts: hltd-bs
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: start bs tomcat
+     shell:
+       cmd: startup.sh
+       chdir: /data/deploy/BSServer/bin
+
+- name: start agent on hltd-cis-1
+  hosts: hltd-cis-1
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: start cis01 tomcat
+     shell:
+       cmd: startup.sh
+       chdir: /data/deploy/tomcat-cis/bin
+
+
+- name: start agent on hltd-cis-2
+  hosts: hltd-cis-2
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: start cis02 tomcat
+     shell:
+       cmd: startup.sh
+       chdir: /data/deploy/tomcat-cis/bin
+
+- name: start agent on hltd-fileserver
+  hosts: hltd-fileserver
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: start fileserver tomcat
+     shell:
+       cmd: startup.sh
+       chdir: /data/deploy/tomcat-fileserver/bin
+
+- name: start agent on hltd-fs
+  hosts: hltd-fs
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: start fs tomcat
+     shell:
+       cmd: startup.sh
+       chdir: /data/deploy/tomcat-fileserver/bin
+
+- name: start agent on jl-hs01
+  hosts: jl-hs01
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: start hs01 tomcat
+     shell:
+       cmd: startup.sh
+       chdir: /data/tomcat-hs/bin
+
+- name: start agent on jl-hs02
+  hosts: jl-hs02
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: start hs02 tomcat
+     shell:
+       cmd: startup.sh
+       chdir: /data/tomcat-hs/bin
+
+- name: start agent on jl-pay
+  hosts: jl-pay
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: start pay tomcat
+     shell:
+       cmd: startup.sh
+       chdir: /data/99-tomcat-pay/tomcat-pay/bin

@@ -67,10 +67,10 @@ scp domain_check.sh root@172.17.1.185:/root/shell/domain_check
 - 方便同步的指令(需要更新時)  
 `99`:
 ```
-rsync -avh qwer99@52.237.96.14:~/bash/bot [本地端放這專案的路徑]/shell/daily_report_robot/99
-rsync -avh qwer99@52.237.96.14:~/bash/log [本地端放這專案的路徑]/shell/daily_report_robot/99
-rsync -avh qwer99@52.237.96.14:~/bash/test [本地端放這專案的路徑]/shell/daily_report_robot/99
-rsync -avh qwer99@52.237.96.14:~/game_log_app [本地端放這專案的路徑]/shell/daily_report_robot/99
+rsync -avh qwer99@[host ip]:~/bash/bot [本地端放這專案的路徑]/shell/daily_report_robot/99
+rsync -avh qwer99@[host ip]:~/bash/log [本地端放這專案的路徑]/shell/daily_report_robot/99
+rsync -avh qwer99@[host ip]:~/bash/test [本地端放這專案的路徑]/shell/daily_report_robot/99
+rsync -avh qwer99@[host ip]:~/game_log_app [本地端放這專案的路徑]/shell/daily_report_robot/99
 ```
 `joyland`:
 ```

@@ -1,0 +1,76 @@
+- name: close agent on hltd-agent
+  hosts: hltd-agent
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+   - name: kill agent tomcat
+     shell: ps -ef | grep "AgentServer/conf/logging.properties" |awk '{print $2}' | xargs kill -9
+
+- name: close agent on hltd-bs
+  hosts: hltd-bs
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: kill bs tomcat
+     shell: ps -ef | grep "BSServer/conf/logging.properties" |awk '{print $2}' | xargs kill -9
+
+- name: close agent on hltd-cis-1
+  hosts: hltd-cis-1
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: kill cis01 tomcat
+     shell: ps -ef |grep "tomcat-cis/conf/logging.properties" |awk '{print $2}' | xargs kill -9
+
+
+- name: close agent on hltd-cis-2
+  hosts: hltd-cis-2
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: kill cis02 tomcat
+     shell: ps -ef |grep "tomcat-cis/conf/logging.properties" |awk '{print $2}' | xargs kill -9
+
+- name: close agent on hltd-fileserver
+  hosts: hltd-fileserver
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: kill fileserver tomcat
+     shell: ps -ef |grep "tomcat-fileserver/conf/logging.properties" |awk '{print $2}' | xargs kill -9
+
+- name: close agent on hltd-fs
+  hosts: hltd-fs
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: kill fs tomcat
+     shell: ps -ef |grep "tomcat-fs/conf/logging.properties" |awk '{print $2}' | xargs kill -9
+
+- name: close agent on jl-hs01
+  hosts: jl-hs01
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: kill bs tomcat
+     shell: ps -ef |grep "tomcat-hs/conf/logging.properties" |awk '{print $2}' | xargs kill -9
+
+- name: close agent on jl-hs02
+  hosts: jl-hs02
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: kill bs tomcat
+     shell: ps -ef |grep "tomcat-hs/conf/logging.properties" |awk '{print $2}' | xargs kill -9
+
+- name: close agent on jl-pay
+  hosts: jl-pay
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+   - name: kill bs tomcat
+     shell: ps -ef |grep "99-tomcat-pay/tomcat-pay/conf/logging.properties" |awk '{print $2}' | xargs kill -9
+  
+   - debug:
+       msg: "可以把阿波羅直接關機了"

@@ -1,0 +1,26 @@
+all:
+  hosts:
+    yg-t-game01:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/UAT_key.pem
+    yg-t-java01:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/yg-t-java01.pem
+    yg-t-db01:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/yg-t-db01.pem
+    yg-t-db02:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/yg-t-db02.pem
+    yg-t-proxyweb01:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/yg-t-proxyweb01.pem
+    uat-elk:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/aws-elk.pem

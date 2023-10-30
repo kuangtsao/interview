@@ -1,0 +1,3 @@
+readonly:
+  - name: yile
+    sudo: true

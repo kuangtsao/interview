@@ -15,8 +15,8 @@ FILE_NAME="web-mobile-YGGame-$ENVIORMENT-$VERSION.zip"
 
 # 依據填入的 BOT 參數切換
 if [ $BOT == 1 ]; then
-  BOT_TOKEN="https://api.telegram.org/bot1864086086:AAGu2_VFuSlDcLHYLWu3rDdjVNfjpGW3T9U/sendMessage"
-  CHAT_ID="-443492941"
+  BOT_TOKEN="https://api.telegram.org/botbot_token/sendMessage"
+  CHAT_ID="chatroom"
 else
   echo "BOT 填錯了，目前為：$BOT"
   exit 0

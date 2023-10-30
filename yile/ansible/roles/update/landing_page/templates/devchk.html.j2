@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>appget</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <script src="jquery/jquery-1.8.0.min.js"></script>
+    <script type="application/javascript">
+      var userAgentInfo = navigator.userAgent;
+
+      var device = '';
+      var androidUrl = "{{ item.value.android_url }}";
+      var iosUrl = "{{ item.value.ios_url }}";
+      var appUrl = "";
+      var hsUrl = "{{ item.value.hs_url }}";  // server prefix
+
+      /**
+      * 获取当前访问设备
+      */
+      var checkDevice = function() {
+        var allDevice = ["Windows", "Android", "iPhone", "iPad", "iPod", "Macintosh"];
+
+        for (var v = 0; v < allDevice.length; v++) {
+          if (userAgentInfo.indexOf(allDevice[v]) > 0) {
+            device = allDevice[v];
+            break;
+          }
+        }
+
+//        doGetDownloadUrl();
+        doSetDownloadUrl();
+      };
+
+      /**
+      * 获取下载地址
+      */
+      var doGetDownloadUrl = function() {
+        $.ajax({
+          url: hsUrl + "/app/getDownloadUrl/v1",
+          type: 'get',
+          dataType: 'json',
+          async: false,
+          success: function (data) {
+            if (data != null) {
+              var list = data.msg;
+              if (list != null) {
+                for (var i = 0; i < list.length; i++) {
+                  if (list[i].app_type == "Android") {
+                    androidUrl = list[i].app_url;
+                  }
+                  if (list[i].app_type == "ios") {
+                    iosUrl = list[i].app_url;
+                  }
+                }
+              }
+            }
+          }
+        });
+      };
+
+      /**
+      * 下载地址动态赋值
+      */
+      var doSetDownloadUrl = function () {
+        if (device == "Windows" || device == "Macintosh" || device == "Android") {
+          // 添加pc端及Android端下载地址
+          appUrl = androidUrl;
+        } else {
+          // 添加ios下载地址
+          appUrl = iosUrl;
+        }
+      };
+
+      function link2app() {
+        window.location.assign(appUrl);
+      }
+
+      checkDevice();
+      link2app();
+    </script>
+  </body>
+</html>
+<div style="display:none">
+<script type="text/javascript" src="{{ item.value.tracking_url }}"></script>
+</div>

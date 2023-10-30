@@ -32,14 +32,14 @@ if [ $ENVIORMENT == "TEST" ]; then
 elif [ $ENVIORMENT == "UAT" ]; then
   echo "in UAT"
   USER=centos
-  HOST=54.179.73.50
+  HOST=[host ip]
   IDENTITY_FILE_PATH="/mnt/yile/ssh_key/B/yg-t-java01.pem"
   DEPLOY_PATH="/data/tomcat-auth-api/webapps/ROOT"
   BINARY_PATH="/data/tomcat-auth-api/bin"
 elif [ $ENVIORMENT == "PRD" ]; then
   echo "in PRD"
   USER=centos
-  HOST=18.140.235.153
+  HOST=[host ip]
   IDENTITY_FILE_PATH="/mnt/yile/ssh_key/B/prd-yg-auth.pem"
   DEPLOY_PATH="/data/auth-tomcat/webapps/ROOT"
   BINARY_PATH="/data/auth-tomcat/bin"

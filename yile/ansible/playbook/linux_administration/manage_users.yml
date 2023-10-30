@@ -1,0 +1,6 @@
+- name: manage users in desired hosts
+  hosts: "{{ hosts_name }}" 
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  roles:
+    - role: manage_users

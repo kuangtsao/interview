@@ -1,0 +1,43 @@
+- name: close nginx on jl-webpage
+  hosts: jl-webpage
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+    - name: close nginx by systemd 
+      systemd:
+        state: stopped
+        name: nginx
+
+- name: close nginx on jl-patch01
+  hosts: jl-patch01
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+    - name: close nginx by systemd 
+      systemd:
+        state: stopped
+        name: nginx
+
+- name: close nginx on jl-ag-gw01
+  hosts: jl-ag-gw01
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+    - name: close nginx by systemd 
+      systemd:
+        state: stopped
+        name: nginx
+
+- name: close nginx on hltd-nginx-1
+  hosts: hltd-nginx-1
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+    - name: close nginx by systemd 
+      systemd:
+        state: stopped
+        name: nginx

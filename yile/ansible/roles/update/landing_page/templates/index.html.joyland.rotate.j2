@@ -1,0 +1,588 @@
+
+<html>
+  <head>
+    <title>欢乐天地</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1, user-scalable=no" name="viewport" />
+    <link rel="icon" href="data:image/ico;">
+    <link rel="stylesheet" href="js/swiper.min.css">
+    <link rel="stylesheet" href="js/layout.css">
+
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .swiper-container{bottom: 0.8rem;}
+      /*#picImg2{padding-top: 1rem !important;}*/
+      @media screen and (min-width: 960px){
+          .swiper-container{bottom: 1.5rem !important;}
+          .swiper-container img{width: 32rem !important;height: 15rem !important;}
+          #picIcon2{width: 5.5rem;z-index: 1000;position: fixed;max-width: 720px;left: 26.2%;bottom: 0.5rem;}
+      }
+
+      .btn img {
+        top: 100%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+      }
+
+      .banner {
+        position: absolute;
+        z-index: 900;
+        top: 30px;
+        left: 50%;
+        width: 100%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        background-size: 100% 100%;
+      }
+
+      .bg_01 {
+        position: absolute;
+        z-index: 2;
+        margin: 0;
+        padding: 0;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        max-width: 640px;
+        height: auto;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+      }
+
+      .slideimg {
+        max-height: 225px;
+        max-width: 100%;
+      }
+
+      .foot {
+        max-width: 640px;
+        max-height: 120px;
+        width: 100%;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        z-index: 990;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+
+      .foot-pc {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        bottom: 0px;
+        position: fixed;
+        z-index: 999;
+      }
+
+      .kuang {
+        width: 250px;
+        top: 180px;
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        opacity: 0.8;
+        height: 480px;
+        background-image: url("img/download_bg.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-left: 500px;
+      }
+
+      .urlqrcode {
+        width: :150px;
+        top: 248px;
+        position: fixed;
+        right: 48px;
+        height: 180;
+        z-index: 998;
+      }
+
+      .crmlink {
+        top: 95px;
+        width:90px;
+        height:90px;
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        opacity: 0.8;
+        background-repeat: no-repeat;
+      }
+
+      .download {
+        top: 280px;
+        left: 19px;
+        position: relative;
+        z-index: 999;
+        opacity: 0.8;
+      }
+
+      @media ( max-width: 619px ) {
+        .kuang {
+          display: none
+        }
+
+        .bg {
+          height: 900px;
+        }
+      }
+
+      .text-center {
+        margin: 0;
+        padding: 0;
+        width: -webkit-calc(100% - 98px);
+        width: -moz-calc(100% - 98px);
+        width: calc(100% - 98px);
+        float: right;
+      }
+
+      img {
+        margin: 0;
+        padding: 0;
+        display: "block";
+      }
+
+      .slidetop {
+        position: relative;
+        z-index: 999;
+        margin-top: -298%;
+      }
+
+      .slidetop-pc {
+        position: relative;
+        z-index: 999;
+        margin-top: -290%;
+      }
+
+      .downbtnBottom {
+        position: absolute;
+        max-height:30px;
+        width: 100%;
+        bottom: 20px;
+        left: 150px;
+        z-index:999;
+      }
+
+      .logo-pc {
+        position: absolute;
+        z-index: 900;
+        top: 630px;
+        left: 50%;
+        width: 80%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        background-size: 100% 100%;
+      }
+
+      .logo {
+        position: absolute;
+        z-index: 900;
+        top: 465px;
+        left: 50%;
+        width: 80%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        background-size: 100% 100%;
+      }
+
+    </style>
+  </head>
+  <body style="margin:0;padding:0;">
+    <div id="downloadBody" onclick="downloadBody();" >
+      <div class="bg_01">
+
+        <!-- background -->
+        <img src="img/bg3.jpg" width="100%" height="auto" alt=""/>
+        <img src="img/bg5.png" width="100%" height="auto" alt=""/>
+
+        <!-- Logo -->
+        <div class="logo" id="uplogoId">
+          <img src="img/LOGO.png" width="100%" alt="">
+        </div>
+
+        <!-- Banner -->
+        <div class="banner">
+            <img src="img/bg2.png" width="100%" alt="">
+        </div>
+
+        <!-- Slider -->
+        <div class="slider slidetop" id="sliderTopId">
+          <div id="slider" style="text-align: center;">
+            <div id="certify">
+              <div class="swiper-container">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <img src="img/slider1.png" class="slideimg" alt="" />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="img/slider2.png" class="slideimg" alt="" />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="img/slider3.png" class="slideimg" alt="" />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="img/slider4.png" class="slideimg" alt="" />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="img/slider5.png" class="slideimg" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Download Btn -->
+        <a id="downloadBtn" style="position: absolute;width: 100%;text-align: center;">
+          <div>
+            <img src="img/downbtn.gif" alt="" style="width: 70%;z-index: 6">
+          </div>
+        </a>
+
+        <!-- show window -->
+        <div style="margin-top: 100%;" id="showWinId">
+          <img src="img/bg7.png" style="width: 96%;z-index: 2;position: absolute;margin-left: 2%;">
+          <img src="img/bg9.png" style="width: 45%;z-index: 3;position: absolute;margin-left: 27.5%;margin-top: 2.5%;">
+          <img src="img/bg6.png" style="width: 90%;z-index: 2;position: absolute;margin-top: 11%;margin-left: 5%">
+        </div>
+
+        <!-- Slider on bottom -->
+        <div style="margin-top: 158%;" id="sliderBtnId">
+          <img src="img/bg7.png" style="width: 96%;z-index: 2;position: absolute;margin-left: 2%;">
+          <img src="img/bg10.png" style="width: 35%;z-index: 3;position: absolute; margin-left: 32.5%;  margin-top: 2.5%;">
+          <div id="sliderBottomId" style="width: 100%;margin-left: 5%; margin-top: 13%;position: absolute;z-index: 5">
+            <div id="certify2">
+              <div class="swiper-container">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <img src="img/game1.png" style="max-height: auto; max-width:100%;" />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="img/game2.png" style="max-height: auto; max-width:100%;" />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="img/game3.png" style="max-height: auto; max-width:100%;" />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="img/game4.png" style="max-height: auto; max-width:100%;" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRM Link -->
+    <div class="crmlink" id="crmlinkId" onclick="linkCrm()">
+      <img src="img/icon_04.png" style="width:100%; height:auto;" />
+    </div>
+
+    <!-- Download Panel on right side -->
+    <div class="kuang" id="kuangId">
+      <div class="download">
+        <a id="ios">
+          <div style="position ">
+            <img src="img/download_icon_01.png">
+          </div>
+        </a>
+        <a id="andriod">
+          <div class="down-ios">
+            <img src="img/download_icon_02.png">
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="urlqrcode" id="urlqrId">
+      <img id="androidqr" width="150"/>
+    </div>
+
+    <!-- Footage bar -->
+    <div class="foot" style="background-image:url('img/bg1.png');" onclick="downloadBody();">
+      <div id="footageBarId" style="height:70px;">
+        <img id="logoId" style="width:50px; position: absolute; top:10px; left:10px;" src="img/icon_512@2x.png" alt="">
+        <img id="ad1Id" style="position: absolute; width:auto; left:75px; bottom:10px; height:15px;" src="img/icon_01.png" alt="">
+        <img id="ad2Id" style="position: absolute; width:auto; left:115px; bottom:10px; height:15px;" src="img/icon_02.png" alt="">
+        <img id="downbtnImgId" style="position: absolute; width:auto; left:245px; bottom:10px; height:50px;" src="img/icon_03.png" alt="">
+      </div>
+    </div>
+
+  </body>
+  <script src="js/rocket-loader.min.js" data-cf-settings="9495a32b729f45bced865cd7-|49" defer=""></script>
+  <script src="js/jquery-confirm.min.js" type="9495a32b729f45bced865cd7-text/javascript"></script>
+  <script src="js/swiper.min.js" type="9495a32b729f45bced865cd7-text/javascript"></script>
+  <script src="js/script.js" type="9495a32b729f45bced865cd7-text/javascript"></script>
+  <script src="jquery/jquery-1.8.0.min.js"></script>
+  <script type="application/javascript">
+    var userAgentInfo = navigator.userAgent;
+
+    var device = '';
+    var androidUrl = "{{ item.value.android_url }}";
+    var iosUrl = "{{ item.value.ios_url }}";
+    var crmUrl = "";
+    var qrUrl = "img/qrcode.jpg";
+    var hsUrl = "{{ item.value.hs_url }}";
+
+    var context = {"clientId":"1"};
+
+    // 取得Get參數
+    var url = new URL(window.location.href);
+    var inviteCode = url.searchParams.get("inviteCode");
+    console.log(inviteCode);
+
+    /**
+    * 获取地址栏的请求参数
+    * */
+    function getQueryVariable(variable)
+    {
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        if(pair[0] == variable){return pair[1];}
+      }
+      return(false);
+    }
+
+    /**
+    * 获取当前访问设备
+    */
+    var checkDevice = function() {
+      var allDevice = ["Windows", "Android", "iPhone", "iPad", "iPod", "Macintosh"];
+
+      for (var v = 0; v < allDevice.length; v++) {
+        if (userAgentInfo.indexOf(allDevice[v]) > 0) {
+          device = allDevice[v];
+          break;
+        }
+      }
+      doGetCrmUrl();
+//      doGetDevChkQRCode();
+//      doGetDownloadUrl();
+      doSetDownloadUrl();
+    };
+
+    /**
+    * 取得qr code
+    */
+    var doGetDevChkQRCode = function() {
+      $.ajax({
+        url: hsUrl + "/app/getRedirectQrCodeUrl/v1",
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+          if (data != null && data.code == 10000) {
+            qrUrl = data.result;
+          }
+        }
+      });
+    };
+
+    /**
+    * 取得客服連結
+    */
+    var doGetCrmUrl = function() {
+      $.ajax({
+        url: hsUrl + "/system/getCustomerServiceConfig/v1",
+        type: 'POST',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+          if (data != null && data.code == 10000) {
+            crmUrl = data.result;
+          }
+        }
+      });
+    };
+
+    /**
+    * 获取下载地址
+    */
+    var doGetDownloadUrl = function() {
+      $.ajax({
+        url: hsUrl + "/app/getDownloadUrl/v1",
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+          if (data != null) {
+            var list = data.msg;
+            if (list != null) {
+              for (var i = 0; i < list.length; i++) {
+                if (list[i].app_type == "Android") {
+                  androidUrl = list[i].app_url;
+                }
+                if (list[i].app_type == "ios") {
+                  iosUrl = list[i].app_url;
+                }
+              }
+            }
+          }
+        }
+      });
+    };
+
+    /**
+    * 下载地址动态赋值
+    */
+    var doSetDownloadUrl = function () {
+      if (device == "Windows" || device == "Macintosh") {
+        // 添加pc端下载地址
+        console.log("pc端");
+        $("#kuangId").show();
+        $("#urlqrId").show();
+        $("#downloadBtn").attr("href", androidUrl);
+        $("#downloadBody").val(androidUrl);
+        $("#andriod").attr("href", androidUrl);
+        $("#ios").attr("href", iosUrl);
+        $("#androidqr").attr("src", qrUrl);
+        // onclick 禁用
+        $(".bg").attr("onclick", "null");
+//        $("#footId").hide();
+        $("#showWinId").attr("style", "margin-top: 110%;");
+        $("#sliderBtnId").attr("style", "margin-top: 175%;");
+        $("#sliderTopId").attr("class", "slidetop-pc");
+        $("#footageBarId").attr("style", "height:120px; width:auto;");
+        $("#logoId").attr("style", "width:90px; left:10px; position:absolute; top: 15px;");
+        $("#ad1Id").attr("style", "height:20px; left:120px; position:absolute; top: 80px;");
+        $("#ad2Id").attr("style", "height:20px; left:170px; position:absolute; top: 80px;");
+        $("#downbtnImgId").attr("style", "width:200px; left:400px; position:absolute; top: 22px;");
+        $("#sliderBottomId").attr("style", "width: 100%;margin-left: 10%; margin-top: 15%;position: absolute;z-index: 5");
+        $("#uplogoId").attr("class", "logo-pc");
+      } else if (device == "Android") {
+        // 添加Android下载地址
+        console.log("Android");
+        $("#kuangId").hide();
+        $("#urlqrId").hide();
+        $("#andriod").attr("href", androidUrl);
+        $("#downloadBtn").attr("href", androidUrl);
+        $("#downloadBody").val(androidUrl);
+        // onclick 禁用
+        $(".bg").attr("onclick", "null");
+//        $("#footId").show();
+        $("#showWinId").attr("style", "margin-top: 90%;");
+        $("#sliderBtnId").attr("style", "margin-top: 150%;");
+        $("#sliderTopId").attr("class", "slidetop");
+        $("#footageBarId").attr("style", "height:70px");
+        $("#logoId").attr("style", "width:50px; left:10px; position:absolute; top: 10px;");
+        $("#ad1Id").attr("style", "height:15px; left:75px; position:absolute; bottom: 10px;");
+        $("#ad2Id").attr("style", "height:15px; left:115px; position:absolute; bottom: 10px;");
+        $("#downbtnImgId").attr("style", "height:50px; left:245px; position:absolute; bottom: 10px;");
+        $("#sliderBottomId").attr("style", "width: 92%;margin-left: 4%; margin-top: 12%;position: absolute;z-index: 5");
+        $("#uplogoId").attr("class", "logo");
+      } else {
+        // 添加ios下载地址
+        console.log("ios");
+        $("#kuangId").hide();
+        $("#urlqrId").hide();
+        $("#ios").attr("href", iosUrl);
+        $("#downloadBtn").attr("href", iosUrl);
+        $("#downloadBody").val(iosUrl);
+//        $("#footId").show();
+        $("#showWinId").attr("style", "margin-top: 90%;");
+        $("#sliderBtnId").attr("style", "margin-top: 150%;");
+        $("#sliderTopId").attr("class", "slidetop");
+        $("#footageBarId").attr("style", "height:70px");
+        $("#logoId").attr("style", "width:50px; left:10px; position:absolute; top: 10px;");
+        $("#ad1Id").attr("style", "height:15px; left:75px; position:absolute; bottom: 10px;");
+        $("#ad2Id").attr("style", "height:15px; left:115px; position:absolute; bottom: 10px;");
+        $("#downbtnImgId").attr("style", "height:50px; left:245px; position:absolute; bottom: 10px;");
+        $("#sliderBottomId").attr("style", "width: 92%;margin-left: 4%; margin-top: 12%;position: absolute;z-index: 5");
+        $("#uplogoId").attr("class", "logo");
+      }
+    };
+
+    checkDevice();
+
+    // 覆寫剪貼簿方法，新增iOS判斷條件
+    window.Clipboard = (function(window, document, navigator) {
+      var textArea, copy;
+      function isOS() {
+        return navigator.userAgent.match(/ipad|iphone/i);
+      }
+      function createTextArea(text) {
+        textArea = document.createElement('textArea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+      }
+      function selectText() {
+        var range, selection;
+        if (isOS()) {
+          range = document.createRange();
+          range.selectNodeContents(textArea);
+          selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          textArea.setSelectionRange(0, 999999);
+        } else {
+          textArea.select();
+        }
+      }
+      function copyToClipboard() {
+        document.execCommand("Copy");
+        document.body.removeChild(textArea);
+      }
+      copy = function(text) {
+        createTextArea(text);
+        selectText();
+        copyToClipboard();
+      };
+      return {
+        copy: copy
+      };
+    })(window, document, navigator);
+
+    /**
+    * 复制内容到粘贴板
+    */
+    var getAgentInfo = function() {
+
+      var copyContext = JSON.stringify(JSON.stringify(context));
+      copyContext = copyContext.substring(1, copyContext.length - 1);
+      console.log("context:" + copyContext);
+
+      //檢查是否有邀請碼
+      if(inviteCode == null || inviteCode == "" || inviteCode == undefined){
+        //無邀請碼帶入{"clientId":"1"}
+        window.Clipboard.copy(copyContext);
+      } else {
+        //邀請碼複製到剪貼簿
+        var contextWithInvitecode = "{\\\"clientId\\\":\\\"" + inviteCode + "\\\"}";
+        window.Clipboard.copy(contextWithInvitecode);
+      }
+      console.log("======内容複製到剪貼簿======");
+
+    };
+
+    console.log('这部设备是：' + device);
+    console.log('设备信息：' + userAgentInfo);
+
+    function downloadBody(){
+      getAgentInfo();
+      window.location.assign($("#downloadBody").val());
+    }
+
+    function linkCrm() {
+      window.location.assign(crmUrl);
+    }
+  </script>
+</html>
+<div style="display:none">
+  <script type="text/javascript" src="{{ item.value.tracking_url }}"></script>
+</div>

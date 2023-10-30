@@ -60,7 +60,7 @@ $ rsync -avh [需更新的檔案] qpdevops@52.184.99.147:~/bash/gamelog/
 
 久久
 ```
-$ rsync -avh [需更新的檔案] qwer99@52.237.96.14:~/bash/gamelog/
+$ rsync -avh [需更新的檔案] qwer99@[host ip]:~/bash/gamelog/
 ```
 ## 作者
 Marcus Liu(@lmarcus)

@@ -1,0 +1,46 @@
+- name: start nginx on jl-webpage
+  hosts: jl-webpage
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+    - name: start nginx by systemd 
+      systemd:
+        state: started
+        name: nginx
+
+- name: start nginx on jl-patch01
+  hosts: jl-patch01
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+    - name: start nginx by systemd 
+      systemd:
+        state: started
+        name: nginx
+
+- name: start nginx on jl-ag-gw01
+  hosts: jl-ag-gw01
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+    - name: start gateway api service
+      shell: java -jar /data/GatewayAPIService/GatewayAPIService.jar
+
+    - name: start nginx by systemd 
+      systemd:
+        state: started
+        name: nginx
+
+- name: start nginx on hltd-nginx-1
+  hosts: hltd-nginx-1
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  tasks:
+    - name: start nginx by systemd 
+      systemd:
+        state: started
+        name: nginx

@@ -1,0 +1,87 @@
+- name: check vars/{{ product }}.yml exists
+  stat:
+    path: "{{ role_path }}/vars/{{ product }}.yml"
+  register: vars_yml
+  delegate_to: 127.0.0.1
+
+- name: check the var whether exists
+  debug:
+    msg: "vars_yml:{{ vars_yml.stat.exists }}"
+
+- include_vars: "{{ role_path }}/vars/{{ product }}.yml"
+  when: vars_yml.stat.exists
+
+- name: get today's date in jenkins
+  shell: date +%Y%m%d
+  register: date_string
+  delegate_to: 127.0.0.1
+
+- name: register apk names in "{{ apk_upload_path }}"
+  shell: ls "{{ apk_upload_path }}"
+  register: original_apk_name
+  delegate_to: 127.0.0.1
+
+- name: show original_apk_name
+  debug:
+    msg: "origin apk name: {{ original_apk_name.stdout_lines }}"
+
+- name: initial origin_apk_name_list as an array
+  set_fact:
+    original_apk_name_list: []
+
+- name: build a list of original apk name
+  set_fact:
+    original_apk_name_list: "{{ original_apk_name_list }} + ['{{ item }}']"
+  with_items: "{{ original_apk_name.stdout_lines }}"
+
+- name: echo original_apk_name_list
+  debug:
+    var: original_apk_name_list
+
+- name: generate recent channel code from original apk files
+  shell: ls "{{ apk_upload_path }}" | cut -d - -f 4 | cut -d . -f 1
+  register: channel_code
+  delegate_to: 127.0.0.1
+
+- name: show channel_code
+  debug:
+    msg: "channel code: {{ channel_code.stdout_lines }}"
+
+- name: initial new_apk_name_list as an array
+  set_fact:
+    new_apk_name_list: "[]"
+
+- name: Build a list of new apk file name
+  set_fact:
+    new_apk_name_list: "{{ new_apk_name_list }} + ['{{ apk_name_prefix }}_{{ item }}_{{ date_string.stdout }}.apk']"
+  with_items: "{{ channel_code.stdout_lines }}"
+
+- name: echo new_apk_name_list
+  debug:
+    var: new_apk_name_list
+
+- name: show files in new version application directory
+  find:
+    paths:
+      - "{{ apk_upload_path }}"
+  register: my_find
+  delegate_to: 127.0.0.1
+
+- name: check files in new version application directory
+  debug:
+    #var: item.path
+    msg: "path={{ item.path }}"
+  with_items: "{{ my_find.files }}"
+
+- name: copy all apk to {{ hosts_name }}'s deploy path
+  copy:
+    src: "{{ item }}"
+    dest: "{{ deploy_path }}"
+  with_fileglob:
+    - "{{ apk_upload_path }}/*"
+
+- name: rename all upload files in {{ hosts_name }}'s deploy path
+  shell: mv "{{ deploy_path }}"/"{{ item.0 }}"  "{{ deploy_path }}"/"{{ item.1 }}"
+  with_together:
+    - "{{ original_apk_name_list }}"
+    - "{{ new_apk_name_list }}"

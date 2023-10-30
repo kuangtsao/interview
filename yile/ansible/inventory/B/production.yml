@@ -1,0 +1,42 @@
+all:
+  hosts:
+    YG_prd_webproxy:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/prd-yg-proxy.pem
+    YG_prd_bs:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/prd-yg-bs.pem
+    YG_prd_db1:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/prd-yg-DB1.pem
+    yg-prd-central-gs:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/prd-yg-central-GS
+    yg-prd-auth:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/prd-yg-auth.pem
+    yg_prd_redis:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/prd-yg-redis.pem
+    yg-prd-ph-db1:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/prd-yg-phdbuser.pem
+    yg-ph-gs:
+      ansible_host: [host ip]
+      ansible_user: centos
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/prd-yg-phuser.pem
+    yg-prd-prometheus:
+      ansible_host: [host ip]
+      ansible_user: ec2-user
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/aws-elk.pem
+    prd-elk:
+      ansible_host: [host ip]
+      ansible_user: ec2-user
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/B/aws-elk.pem

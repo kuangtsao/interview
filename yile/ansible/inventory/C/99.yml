@@ -1,0 +1,97 @@
+all:
+  hosts:
+    99-ag-gw01:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-agent:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-agtest:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-apollo:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-bs:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-cis01:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-cis02:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-db01:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-fileserver:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-fs:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-gameserver:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-webpage:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-hs01:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-hs02:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-patch:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-pay:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-proxy02:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-proxy05:
+      ansible_host: [host ip]
+      ansible_user: qwer
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd
+    99-redis01:
+      ansible_host: [host ip]
+      ansible_user: qwer99
+      ansible_become_password: "{{ nine_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/99-prd

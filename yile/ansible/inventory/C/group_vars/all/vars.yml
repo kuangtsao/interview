@@ -1,0 +1,7 @@
+nine_sudo_password_1: "{{ vault_nine_sudo_password_1 }}"
+99_sudo_password_1: "{{ vault_99_sudo_password_1 }}"
+demo_sudo_password_1: "{{ vault_demo_sudo_password_1 }}"
+demo_sudo_password_2: "{{ vault_demo_sudo_password_2 }}"
+demo_sudo_password_3: "{{ vault_demo_sudo_password_3 }}"
+hl_prd_sudo_password_1: "{{ vault_hl_prd_password-1 }}"
+hl_prd_sudo_password_2: "{{ vault_hl_prd_password-2 }}"

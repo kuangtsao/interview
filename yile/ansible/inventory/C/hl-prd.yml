@@ -1,0 +1,102 @@
+all:
+  hosts:
+    hltd-agent:
+      ansible_host: [host ip]
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-apollo:
+      ansible_host: [host ip]
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-bs:
+      ansible_host: [host ip]
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-cis-1:
+      ansible_host: [host ip]
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-cis-2:
+      ansible_host: [host ip]
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-fileserver:
+      ansible_host: [host ip]
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-fs:
+      ansible_host: [host ip]
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-gameserver:
+      ansible_host: 52.184.99.147
+      ansible_user: qpdevops
+      ansible_python_interpreter: /usr/bin/python2.7
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    jl-webpage:
+      ansible_host: 52.175.49.121
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    jl-hs01:
+      ansible_host: 207.46.154.147
+      ansible_user: qwerjl
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    jl-hs02:
+      ansible_host: 23.98.37.192
+      ansible_user: qwerjl
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    jl-pay:
+      ansible_host: 65.52.175.107
+      ansible_user: qwerjl
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-nginx-1:
+      ansible_host: 23.99.105.152
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-redis-1:
+      ansible_host: 52.229.159.32
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-redis-2:
+      ansible_host: 168.63.135.200
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-mysql-2:
+      ansible_host: 13.70.0.233
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_2 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    hltd-mysql-1:
+      ansible_host: 65.52.168.14
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_2 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    jl-ag-gw01:
+      ansible_host: 40.81.208.77
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    jl-patch01:
+      ansible_host: 40.83.97.126
+      ansible_user: qpdevops
+      ansible_become_password: "{{ hl_prd_sudo_password_1 }}"
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd
+    jl-patch-02:
+      ansible_host: 52.175.12.170
+      ansible_user: qpdevops
+      ansible_ssh_private_key_file: /mnt/yile/ssh_key/C/hl-prd

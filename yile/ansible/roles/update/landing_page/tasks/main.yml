@@ -1,0 +1,37 @@
+- name: check vars/{{ product }}.yml exists
+  stat:
+    path: "{{ role_path }}/vars/{{ product }}.yml"
+  register: vars_yml
+  delegate_to: 127.0.0.1
+
+- name: check the var whether exists
+  debug:
+    msg: "vars_yml:{{ vars_yml.stat.exists }}"
+
+- include_vars: "{{ role_path }}/vars/{{ product }}.yml"
+  when: vars_yml.stat.exists
+
+- name: Print {{ product }}.yml dictionary
+  debug:
+    msg:
+    - "{{ item.key }}'s infomation"
+    - "index_version: {{ item.value.index_version }}"
+    - "index_deploy_path: {{ item.value.index_deploy_path }}"
+    - "devchk_deploy_path: {{ item.value.devchk_deploy_path }}"
+    - "android_url: {{ item.value.android_url }}"
+    - "ios_url: {{ item.value.ios_url }}"
+    - "hs_url: {{ item.value.hs_url }}"
+    - "tracking_url: {{ item.value.tracking_url }}"
+  loop: "{{ lookup('dict', channel_code) }}"
+
+- name: generate devchk.html to needed path
+  template:
+    src: devchk.html.j2
+    dest: "{{ item.value.devchk_deploy_path }}"
+  loop: "{{ lookup('dict', channel_code) }}"
+
+- name: generate index.html to needed path
+  template:
+    src: index.html.{{ product }}.{{ item.value.index_version }}.j2
+    dest: "{{ item.value.index_deploy_path }}"
+  loop: "{{ lookup('dict', channel_code) }}"

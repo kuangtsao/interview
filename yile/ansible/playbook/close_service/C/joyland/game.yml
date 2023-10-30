@@ -1,0 +1,34 @@
+- name: close games on hltd-server
+  hosts: hltd-gameserver
+  gather_facts: false
+  remote_user: "{{ ansible_user }}"
+  tasks:
+    - name: close douDiZhu
+      shell: ps -ef |grep douDiZhu |grep -v grep |grep -v "restart-99Game.sh" |awk '{print $2}' | xargs kill -9
+    
+    - name: close paoDeKuai
+      shell: ps -ef |grep paoDeKuai |grep -v grep |grep -v "restart-99Game.sh" |awk '{print $2}' | xargs kill -9
+    
+    - name: close zhaJinHua
+      shell: ps -ef |grep zhaJinHua |grep -v grep |grep -v "restart-99Game.sh" |awk '{print $2}' | xargs kill -9
+
+    - name: close deZhouPuKe
+      shell: ps -ef |grep deZhouPuKe |grep -v grep |grep -v "restart-99Game.sh" |awk '{print $2}' | xargs kill -9
+  
+    - name: close dn_qiangZhuang
+      shell: ps -ef |grep dn_qiangZhuang |grep -v grep |grep -v "restart-99Game.sh" |awk '{print $2}' | xargs kill -9
+
+    - name: close dn_baiRen
+      shell: ps -ef |grep dn_baiRen |grep -v grep |grep -v "restart-99Game.sh" |awk '{print $2}' | xargs kill -9
+
+    - name: close benChiBaoMa
+      shell: ps -ef |grep benChiBaoMa |grep -v grep |grep -v "restart-99Game.sh" |awk '{print $2}' | xargs kill -9
+
+    - name: close longHuDou
+      shell: ps -ef |grep longHuDou |grep -v grep |grep -v "restart-99Game.sh" |awk '{print $2}' | xargs kill -9
+
+    - name: close hongHeiDaZhan
+      shell: ps -ef |grep hongHeiDaZhan |grep -v grep |grep -v "restart-99Game.sh" |awk '{print $2}' | xargs kill -9
+
+    - name: close baiJiaLe
+      shell: ps -ef |grep baiJiaLe |grep -v grep |grep -v "restart-99Game.sh" |awk '{print $2}' | xargs kill -9

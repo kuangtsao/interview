@@ -1,0 +1,27 @@
+- name: create group for 'yile',the read-only user
+  group: 
+    name: readonly
+    state: present
+
+- name: add the user 'yile'
+  user:
+    name: yile
+    shell: /bin/bash
+    comment: read user for developer
+    group: readonly
+
+- name: set the user 'yile' 's public key 
+  authorized_key:
+    user: yile
+    state: present
+    key: "{{ lookup('file','files/id_rsa.pub') }}"
+
+- name: include variables in roles_var
+  include_vars: "{{ role_path }}/vars/yile_sudoers.yml"
+
+- name: set the user 'yile' 's sudoers file in /etc/sudoers.d
+  template: 
+    src: "yile_sudoers.j2"
+    dest: "/etc/sudoers.d/yile_sudoers"
+    validate: "visudo -cf %s"
+    mode: "0440"

@@ -1,0 +1,3 @@
+hs_url: "https://hs.service.url.com/hs"
+update_path: "/data/web/update"
+hotfix_upload_path: "/mnt/yile/ClientRelease/Official/{{ product }}/{{ version }}/Hotfix/{{ env }}"
